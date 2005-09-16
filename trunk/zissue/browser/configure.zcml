@@ -238,4 +238,19 @@
       add="zope.ManageContent"
       />
 
+   <page
+      name="comments.html"
+      for="zissue.interfaces.IComment"
+      class=".comment.CommentDetails"
+      template="comments.pt"
+      permission="zope.Public"
+      menu="zmi_views"
+      title="Preview"
+      />
+
+   <defaultView
+      for="zissue.interfaces.IComment"
+      name="comments.html"
+      />
+
 </configure>
