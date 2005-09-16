@@ -1,0 +1,241 @@
+<configure
+    xmlns="http://namespaces.zope.org/browser">
+
+  <addform
+      label="Add Zissue Tracker"
+      name="AddZissueTracker.html"
+      schema="zissue.interfaces.IZissueTracker"
+      content_factory="zissue.zissuetracker.tracker.ZissueTracker"
+      fields="name description"
+      permission="zope.ManageContent"
+      />
+
+  <addMenuItem
+      class="zissue.zissuetracker.tracker.ZissueTracker"
+      title="Zissue Tracker"
+      description="Issue/Bug Tracker"
+      permission="zope.ManageContent"
+      view="AddZissueTracker.html" 
+      />
+
+  <editform
+      schema="zissue.interfaces.IZissueTracker"
+      for="zissue.interfaces.IZissueTracker"
+      label="Change Zissue Tracker"
+      name="edit.html"
+      permission="zope.ManageContent"
+      menu="zmi_views" title="Edit" 
+      />
+
+  <containerViews
+      for="zissue.interfaces.IZissueTracker"
+      index="zope.View"
+      contents="zope.View"
+      add="zope.ManageContent"
+      />
+
+  <addform
+      label="Add Main Product"
+      name="AddMainProduct.html"
+      schema="zissue.interfaces.IMainProduct"
+      content_factory="zissue.zissuetracker.mainproduct.MainProduct"
+      fields="name description"
+      permission="zope.ManageContent"
+      />
+
+  <addMenuItem
+      class="zissue.zissuetracker.mainproduct.MainProduct"
+      title="Main Product"
+      description="Main Product"
+      permission="zope.ManageContent"
+      view="AddMainProduct.html" 
+      />
+
+  <editform
+      schema="zissue.interfaces.IMainProduct"
+      for="zissue.interfaces.IMainProduct"
+      label="Change Main Product"
+      fields="name description"
+      name="edit.html"
+      permission="zope.ManageContent"
+      menu="zmi_views" title="Edit" 
+      />
+
+  <containerViews
+      for="zissue.interfaces.IMainProduct"
+      index="zope.View"
+      contents="zope.View"
+      add="zope.ManageContent"
+      />
+
+  <addform
+      label="Add Sub Product"
+      name="AddSubProduct.html"
+      schema="zissue.interfaces.ISubProduct"
+      content_factory="zissue.zissuetracker.subproduct.SubProduct"
+      fields="name description"
+      permission="zope.ManageContent"
+      />
+
+  <addMenuItem
+      class="zissue.zissuetracker.subproduct.SubProduct"
+      title="Sub Product"
+      description="Sub Product"
+      permission="zope.ManageContent"
+      view="AddSubProduct.html" 
+      />
+
+  <editform
+      schema="zissue.interfaces.ISubProduct"
+      for="zissue.interfaces.ISubProduct"
+      label="Change Sub Product"
+      fields="name description"
+      name="edit.html"
+      permission="zope.ManageContent"
+      menu="zmi_views" title="Edit" 
+      />
+
+  <containerViews
+      for="zissue.interfaces.ISubProduct"
+      index="zope.View"
+      contents="zope.View"
+      add="zope.ManageContent"
+      />
+
+  <addform
+      label="Add Component"
+      name="AddComponent.html"
+      schema="zissue.interfaces.IComponent"
+      content_factory="zissue.zissuetracker.component.Component"
+      fields="name description"
+      permission="zope.ManageContent"
+      />
+
+  <addMenuItem
+      class="zissue.zissuetracker.component.Component"
+      title="Component"
+      description="Component"
+      permission="zope.ManageContent"
+      view="AddComponent.html" 
+      />
+
+  <editform
+      schema="zissue.interfaces.IComponent"
+      for="zissue.interfaces.IComponent"
+      label="Change Component"
+      fields="name description"
+      name="edit.html"
+      permission="zope.ManageContent"
+      menu="zmi_views" title="Edit" 
+      />
+
+  <containerViews
+      for="zissue.interfaces.IComponent"
+      index="zope.View"
+      contents="zope.View"
+      add="zope.ManageContent"
+      />
+
+  <addform
+      label="Add Zissue"
+      name="AddZissue.html"
+      schema="zissue.interfaces.IZissue"
+      content_factory="zissue.zissuetracker.zissuebase.Zissue"
+      fields="summary"
+      permission="zope.ManageContent"
+      />
+
+  <addMenuItem
+      class="zissue.zissuetracker.zissuebase.Zissue"
+      title="Zissue"
+      description="Zissue"
+      permission="zope.ManageContent"
+      view="AddZissue.html"
+      />
+
+  <editform
+      schema="zissue.interfaces.IZissue"
+      for="zissue.interfaces.IZissue"
+      label="Change Zissue"
+      fields="summary"
+      name="edit.html"
+      permission="zope.ManageContent"
+      menu="zmi_views" title="Edit" 
+      />
+
+  <containerViews
+      for="zissue.interfaces.IZissue"
+      index="zope.View"
+      contents="zope.View"
+      add="zope.ManageContent"
+      />
+
+  <addform
+      label="Add Comment"
+      name="AddComment.html"
+      schema="zissue.interfaces.IComment"
+      content_factory="zissue.zissuetracker.comment.Comment"
+      fields="note"
+      permission="zope.ManageContent"
+      />
+
+  <addMenuItem
+      class="zissue.zissuetracker.comment.Comment"
+      title="Comment"
+      description="Comment or Reply"
+      permission="zope.ManageContent"
+      view="AddComment.html"
+      />
+
+  <editform
+      schema="zissue.interfaces.IComment"
+      for="zissue.interfaces.IComment"
+      label="Change Comment"
+      fields="note"
+      name="edit.html"
+      permission="zope.ManageContent"
+      menu="zmi_views" title="Edit" 
+      />
+
+  <containerViews
+      for="zissue.interfaces.IComment"
+      index="zope.View"
+      contents="zope.View"
+      add="zope.ManageContent"
+      />
+
+  <addform
+      label="Add PatchFile"
+      name="AddPatchFile.html"
+      schema="zissue.interfaces.IPatchFile"
+      content_factory="zissue.zissuetracker.patchfile.PatchFile"
+      fields="note"
+      permission="zope.ManageContent"
+      />
+
+  <addMenuItem
+      class="zissue.zissuetracker.patchfile.PatchFile"
+      title="Patch file"
+      description="Patch file"
+      permission="zope.ManageContent"
+      view="AddPatchFile.html"
+      />
+
+  <editform
+      schema="zissue.interfaces.IPatchFile"
+      for="zissue.interfaces.IPatchFile"
+      label="Change PatchFile"
+      fields="note"
+      name="edit.html"
+      permission="zope.ManageContent"
+      menu="zmi_views" title="Edit" 
+      />
+
+  <containerViews
+      for="zissue.interfaces.IPatchFile"
+      index="zope.View"
+      contents="zope.View"
+      add="zope.ManageContent"
+      />
+
+</configure>
