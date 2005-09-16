@@ -22,3 +22,12 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with ZissueTracker; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+--------------------------------------------------------------------------
+
+To install this package copy 'zissue-configure.zcml' to your etc/package-includes
+directory in your Zope3 installation instance.
+
+And place this directory (with directory name 'zissue'; no version number)
+in any Python path.
+
