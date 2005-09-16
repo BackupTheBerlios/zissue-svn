@@ -1,0 +1,193 @@
+<configure
+    xmlns='http://namespaces.zope.org/zope'>
+
+  <interface
+      interface=".interfaces.IZissueTracker"
+      type="zope.app.content.interfaces.IContentType"
+      />
+
+  <content class=".zissuetracker.tracker.ZissueTracker">
+    <implements
+        interface="zope.app.annotation.interfaces.IAttributeAnnotatable"
+        />
+    <implements
+        interface="zope.app.container.interfaces.IContentContainer" 
+        />
+    <factory
+        id="zissue.zissuetracker.tracker.ZissueTracker"
+        description="Zissue Tracker" 
+        />
+    <require
+        permission="zope.ManageContent"
+        interface=".interfaces.IZissueTracker"
+        />
+    <require
+        permission="zope.ManageContent"
+        set_schema=".interfaces.IZissueTracker"
+        />
+  </content>
+
+  <interface
+      interface=".interfaces.IMainProduct"
+      type="zope.app.content.interfaces.IContentType"
+      />
+
+  <content class=".zissuetracker.mainproduct.MainProduct">
+    <implements
+        interface="zope.app.annotation.interfaces.IAttributeAnnotatable"
+        />
+    <implements
+        interface="zope.app.container.interfaces.IContentContainer" 
+        />
+    <factory
+        id="zissue.zissuetracker.mainproduct.MainProduct"
+        description="Main Product" 
+        />
+    <require
+        permission="zope.ManageContent"
+        interface=".interfaces.IMainProduct"
+        />
+    <require
+        permission="zope.ManageContent"
+        set_schema=".interfaces.IMainProduct"
+        />
+  </content>
+
+  <interface
+      interface=".interfaces.ISubProduct"
+      type="zope.app.content.interfaces.IContentType"
+      />
+
+  <content class=".zissuetracker.subproduct.SubProduct">
+    <implements
+        interface="zope.app.annotation.interfaces.IAttributeAnnotatable"
+        />
+    <implements
+        interface="zope.app.container.interfaces.IContentContainer" 
+        />
+    <factory
+        id="zissue.zissuetracker.subproduct.SubProduct"
+        description="Sub Product" 
+        />
+    <require
+        permission="zope.ManageContent"
+        interface=".interfaces.ISubProduct"
+        />
+    <require
+        permission="zope.ManageContent"
+        set_schema=".interfaces.ISubProduct"
+        />
+  </content>
+
+  <interface
+      interface=".interfaces.IComponent"
+      type="zope.app.content.interfaces.IContentType"
+      />
+
+  <content class=".zissuetracker.component.Component">
+    <implements
+        interface="zope.app.annotation.interfaces.IAttributeAnnotatable"
+        />
+    <implements
+        interface="zope.app.container.interfaces.IContentContainer" 
+        />
+    <factory
+        id="zissue.zissuetracker.component.Component"
+        description="Component of a product" 
+        />
+    <require
+        permission="zope.ManageContent"
+        interface=".interfaces.IComponent"
+        />
+    <require
+        permission="zope.ManageContent"
+        set_schema=".interfaces.IComponent"
+        />
+  </content>
+
+  <interface
+      interface=".interfaces.IZissue"
+      type="zope.app.content.interfaces.IContentType"
+      />
+
+  <content class=".zissuetracker.zissuebase.Zissue">
+    <implements
+        interface="zope.app.annotation.interfaces.IAttributeAnnotatable"
+        />
+    <implements
+        interface="zope.app.container.interfaces.IContentContainer" 
+        />
+    <factory
+        id="zissue.zissuebase.zissuebase.Zissue"
+        description="Zissue may not be an issue." 
+        />
+    <require
+        permission="zope.ManageContent"
+        interface=".interfaces.IZissue"
+        />
+    <require
+        permission="zope.ManageContent"
+        set_schema=".interfaces.IZissue"
+        />
+  </content>
+
+  <interface
+      interface=".interfaces.IComment"
+      type="zope.app.content.interfaces.IContentType"
+      />
+
+  <content class=".zissuetracker.comment.Comment">
+    <implements
+        interface="zope.app.annotation.interfaces.IAttributeAnnotatable"
+        />
+    <implements
+        interface="zope.app.container.interfaces.IContentContainer" 
+        />
+    <factory
+        id="zissue.zissuetracker.comment.Comment"
+        description="Comment or reply for a zissue." 
+        />
+    <require
+        permission="zope.ManageContent"
+        interface=".interfaces.ICommentContainer"/>
+    <require
+        permission="zope.ManageContent"
+        interface=".interfaces.IComment"/>
+    <require
+        permission="zope.ManageContent"
+        set_schema=".interfaces.IComment"
+        />
+  </content>
+
+  <interface
+      interface=".interfaces.IPatchFile"
+      type="zope.app.content.interfaces.IContentType"
+      />
+
+  <content class=".zissuetracker.patchfile.PatchFile">
+    <implements
+        interface="zope.app.annotation.interfaces.IAttributeAnnotatable"
+        />
+    <implements
+        interface="zope.app.container.interfaces.IContentContainer" 
+        />
+    <factory
+        id="zissue.zissuetracker.patchfile.PatchFile"
+        description="Patch file for a zissue." 
+        />
+    <require
+        permission="zope.ManageContent"
+        interface=".interfaces.IPatchFileContainer"/>
+    <require
+        permission="zope.ManageContent"
+        interface=".interfaces.IPatchFile"
+        />
+    <require
+        permission="zope.ManageContent"
+        set_schema=".interfaces.IPatchFile"
+        />
+  </content>
+
+  <include package=".browser" />
+
+</configure>
