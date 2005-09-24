@@ -1,0 +1,10 @@
+<ul>
+  <li tal:repeat="item view/listContentInfo">
+    <a href=""
+       	tal:attributes="href item/url">Link</a>
+    <pre tal:content="item/note">Note 1</pre>
+    <br/>
+    <hr width="250" align="left"/>
+    <div tal:replace="structure item/thread"/>
+  </li>
+</ul>

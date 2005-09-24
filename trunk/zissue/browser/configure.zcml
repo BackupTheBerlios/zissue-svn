@@ -239,6 +239,30 @@
       />
 
    <page
+      name="zissues.html"
+      for="zissue.interfaces.IZissue"
+      class=".zissues.ZissueDetails"
+      template="zissues.pt"
+      permission="zope.Public"
+      menu="zmi_views"
+      title="Thread"
+      />
+
+   <defaultView
+      for="zissue.interfaces.IZissue"
+      name="zissues.html"
+      />
+<!--
+   <page
+      name="additional.html"
+      for="zissue.interfaces.IZissue"
+      class=".zissues.Thread"
+      template="zissues.pt"
+      permission="zope.View"
+      menu="zmi_views" title="Thread"
+      />
+-->
+   <page
       name="comments.html"
       for="zissue.interfaces.IComment"
       class=".comment.CommentDetails"
