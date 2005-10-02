@@ -1,0 +1,114 @@
+<!-- BookMarker configuration file -->
+
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser">
+
+  <interface
+      interface=".interfaces.IBookMarker"
+      type="zope.app.content.interfaces.IContentType"
+      />
+
+  <content class=".bookmarker.BookMarker">
+    <implements
+        interface="zope.app.annotation.interfaces.IAttributeAnnotatable"
+        />
+    <implements
+        interface="zope.app.container.interfaces.IContentContainer" 
+        />
+    <factory
+        id="boom.bookmarker.BookMarker"
+        description="Book Marker" 
+        />
+    <require
+        permission="zope.ManageContent"
+        interface=".interfaces.IBookMarker"
+        />
+    <require
+        permission="zope.ManageContent"
+        set_schema=".interfaces.IBookMarker"
+        />
+  </content>
+
+  <interface
+      interface=".interfaces.IMark"
+      type="zope.app.content.interfaces.IContentType"
+      />
+
+  <content class=".bookmarker.Mark">
+    <implements
+        interface="zope.app.annotation.interfaces.IAttributeAnnotatable"
+        />
+    <factory
+        id="boom.bookmarker.Mark"
+        description="A book mark." 
+        />
+    <require
+        permission="zope.ManageContent"
+        interface=".interfaces.IMark"/>
+    <require
+        permission="zope.ManageContent"
+        set_schema=".interfaces.IMark"
+        />
+  </content>
+
+  <browser:addform
+      label="Add Book Marker"
+      name="AddBookMarker.html"
+      schema="boom.interfaces.IBookMarker"
+      content_factory="boom.bookmarker.BookMarker"
+      fields="name"
+      permission="zope.ManageContent"
+      />
+
+  <browser:addMenuItem
+      class=".bookmarker.BookMarker"
+      title="Book Marker"
+      permission="zope.ManageContent"
+      view="AddBookMarker.html"
+  />
+
+  <browser:editform
+      schema="boom.interfaces.IBookMarker"
+      for="boom.interfaces.IBookMarker"
+      label="Change Book Marker"
+      name="edit.html"
+      permission="zope.ManageContent"
+      menu="zmi_views" title="Edit" 
+      />
+
+  <browser:containerViews
+      for="boom.interfaces.IBookMarker"
+      index="zope.View"
+      contents="zope.View"
+      add="zope.ManageContent"
+      />
+
+  <browser:addform
+      label="Add Mark"
+      name="AddMark.html"
+      schema="boom.interfaces.IMark"
+      content_factory="boom.bookmarker.Mark"
+      fields="url description"
+      permission="zope.ManageContent"
+      />
+
+  <browser:addMenuItem
+      class="boom.bookmarker.Mark"
+      title="Mark"
+      description="URL of Website"
+      permission="zope.ManageContent"
+      view="AddMark.html"
+      />
+
+  <browser:editform
+      schema="boom.interfaces.IMark"
+      for="boom.interfaces.IMark"
+      label="Change Mark"
+      fields="url description"
+      name="edit.html"
+      permission="zope.ManageContent"
+      menu="zmi_views" title="Edit" 
+      />
+
+</configure>

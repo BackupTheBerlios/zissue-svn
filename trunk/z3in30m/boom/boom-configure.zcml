@@ -1,0 +1,3 @@
+<!-- just place this file in $ZOPE3INSTANCE/etc/package-includes/ -->
+
+<include package="boom"/>
