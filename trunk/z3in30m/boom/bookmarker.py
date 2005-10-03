@@ -16,12 +16,15 @@
 ## along with BookMarker; if not, write to the Free Software
 ## Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
+__docformat__ = 'restructuredtext'
+
 from zope.interface import implements
 from zope.app.container.btree import BTreeContainer
+from zope.app.container.contained import Contained
 
 from boom.interfaces import IMark, IMarkContained, IBookMarker
 
-class Mark:
+class Mark(Contained):
     """Implementation of IMark
 
     Make sure that the `Mark` implements the `IMark` interface::
@@ -56,11 +59,10 @@ class Mark:
     """
 
     implements(IMark, IMarkContained)
-    #implements(IMark)
+
     url = u"http://www.zope.org"
     description = u""
-    __parent__ = ""
-    __name__ = ""
+
 
 class BookMarker(BTreeContainer):
     """Implementation of a IBookMarker using B-Tree Container
