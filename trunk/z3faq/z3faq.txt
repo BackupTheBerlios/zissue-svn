@@ -1,0 +1,95 @@
+Zope3 FAQ (Unofficial)
+======================
+
+:Editor: Baiju M <baiju.m.mail AT gmail.com>
+:Contributors:
+:Version: 0.1
+:Copyright: This document is placed under public domain.
+
+.. contents::
+
+Introduction
+------------
+
+This is an unofficial FAQ of Zope3, which is mostly collected from 
+zope3-users mailing list and Zope3 blogs by developers and users.
+
+
+General
+-------
+
+General questions about this FAQ, and Zope3.
+
+How to contribute to this FAQ
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Check out Restructured Text from svn://svn.berlios.de/zissue/trunk/z3faq,
+then edit *z3faq.txt* and send your patch to baiju.m.mail at gmail.com::
+
+  $ svn checkout svn://svn.berlios.de/zissue/trunk/z3faq
+  $ cd z3faq
+  $ vim z3faq.txt #edit z3faq.txt
+  $ svn diff > z3faq.patch 
+  
+
+How to write a big question, which is very long and that cannot read in one breath, also it spans more than one line?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Just like this, but we can make questions as much short as we can without
+sacrificing its meaning. 
+
+
+Folklore
+--------
+
+Zope3 folklore.
+
+
+Zope2 to Zope3
+--------------
+
+Component Architecture
+----------------------
+
+
+Interfaces and Adapters
+-----------------------
+
+ZCML
+----
+
+
+ZMI
+---
+
+
+Testing
+-------
+
+Views
+-----
+
+Events
+------
+
+
+Services and Utilities
+----------------------
+
+Security and Principal
+----------------------
+
+
+Zope3 on GNU/Linux , `*BSD` and Solaris
+---------------------------------------
+
+Zope3 on Win32 and NT based systems
+-----------------------------------
+
+Zope3 on Mac OS
+---------------
+
+
+Miscellaneous
+-------------
+
