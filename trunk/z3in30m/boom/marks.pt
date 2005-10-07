@@ -1,0 +1,19 @@
+<html metal:use-macro="views/standard_macros/view">
+  <body>
+    <div metal:fill-slot="body">
+
+      <div class="row">
+        <div class="label">Book Marks:</div>
+        <br/><br/>
+          <li tal:repeat="item view/listMarks">
+
+            <a href="" tal:attributes="href item/url"><span tal:content="item/url">Link</span></a>
+            <pre tal:content="item/description">Description</pre>
+            <br/>
+
+          </li>
+      </div>
+
+    </div>
+  </body>
+</html>

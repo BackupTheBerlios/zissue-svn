@@ -111,4 +111,21 @@
       menu="zmi_views" title="Edit" 
       />
 
+  <browser:page
+      name="marks.html"
+      for="boom.interfaces.IBookMarker"
+      class=".browser.BookMarks"
+      template="marks.pt"
+      permission="zope.Public"
+      menu="zmi_views"
+      title="Marks"
+      />
+
+<!--
+   <defaultView
+      for="zissue.interfaces.IZissue"
+      name="zissues.html"
+      />
+-->
+
 </configure>

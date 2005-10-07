@@ -9,7 +9,7 @@ Zope3 In 30 Minutes
 .. contents::
 
 
-Important Note: I assume you are using Debian 3.1 (Sarge) or similar systems.
+*Important Note*: I assume you are using Debian 3.1 (Sarge) or similar systems.
 
 
 Why 30?
@@ -33,7 +33,7 @@ So lets start...
 ----------------
 
 Zope3 is the third generation of Zope (Z Object Publishing Environment), 
-a framework for web application development.  You can download Zope3 from
+a framework for web application development.  You can download Zope 3.1 from
 http://www.zope.org/Products/Zope3 .  After installation (as root :
 ./configure;make;make install) you have to make an instance 
 (don't worry! just do it) as a normal user.  To do so::
@@ -67,12 +67,323 @@ Let us hope Python 3.0 will make it much easier.  Then you will write
 unit tests, see your ideas became very concrete!.  Now you write your
 real code, you will be satisfied when you implement interfaces one
 by one and unit tests succeeds!. I have given the source code of
-BookMarker here : http://download.berlios.de/zissue/boom.tar.bz2
+BookMarker here: `boom.tar.bz2`_
+
+.. _boom.tar.bz2:
+  http://zissue.berlios.de/downloads/boom.tar.bz2
 
 Your code will be placed at $HOME/myzope/lib/python/boom
 
-Ok, let's start with one container interface ::
+First create a file *interfaces.py* where we will keep our interfaces.
+Later we will implement these interfaces one by one, with strong support
+of unit testing.
+
+Here is our interface.py::
 
   from zope.interface import Interface
+  from zope.schema import Text, TextLine, Field
 
+  from zope.app.container.constraints import ContainerTypesConstraint
+  from zope.app.container.constraints import ItemTypePrecondition
+  from zope.app.container.interfaces import IContained, IContainer
+
+  class IMark(Interface):
+      """This is a book mark."""
+
+      url = TextLine(
+          title=u"URL/Link",
+          description=u"URL of the website",
+          default=u"http://www.zope.org",
+          required=True)
+
+      description = Text(
+          title=u"Description",
+          description=u"Description of the website",
+          default=u"",
+          required=False)
+
+  class IBookMarker(IContainer):
+      """This is the container for all Marks."""
+
+      name = TextLine(
+          title=u"Name of BookMarker",
+          description=u"Name of BookMarker",
+          default=u"",
+          required=True)
+
+      def __setitem__(name, obj):
+          pass
+
+      __setitem__.precondition = ItemTypePrecondition(IMark)
   
+
+  class IMarkContained(IContained):
+      """An Mark can only put in a BookMarker"""
+
+      __parent__ = Field(
+          constraint = ContainerTypesConstraint(IBookMarker))
+  
+
+The first interface IMark has two attributes, one is URL of the site
+and the other one is the description.  Please note IMark is not a
+*class* eventhough we used Python's class definition.  We inherited
+from Interface to make it an interface.  Second one is a container
+interface, here actually we extended IContainer.  By using
+this container interface we can persist our data (instances of
+IMark implentations).  We will put all objects of IMark 
+in a container object of IBookMarker. We will implement IMark along
+with IMarkContained as a constraint interface, so that IMark
+will be only contained in IBookMarker.
+
+Now create *tests.py* and put following content there::
+
+  import unittest
+  from zope.testing.doctestunit import DocTestSuite
+
+  from zope.app.container.tests.test_icontainer import TestSampleContainer
+
+  from boom.bookmarker import BookMarker, Mark
+
+
+  class BookMarkerContainerTest(TestSampleContainer):
+    
+      def makeBookMarkerObject(self):
+          return BookMarker()
+
+  def test_suite():
+      return unittest.TestSuite((
+          DocTestSuite('boom.bookmarker'),
+          unittest.makeSuite(BookMarkerContainerTest),
+          ))
+            
+  if __name__ == '__main__':
+      unittest.main(defaultTest='test_suite') 
+
+Actually, we are not writing any unit tests here, but this will make
+our doc tests working automatically.
+
+Now let's move on to the implementation (bookmarker.py)::
+
+  __docformat__ = 'restructuredtext'
+
+  from zope.interface import implements
+  from zope.app.container.btree import BTreeContainer
+  from zope.app.container.contained import Contained
+
+  from boom.interfaces import IMark, IMarkContained, IBookMarker
+
+  class Mark(Contained):
+      """Implementation of IMark
+
+      Make sure that the `Mark` implements the `IMark` interface::
+
+        >>> from zope.interface.verify import verifyClass
+        >>> verifyClass(IMark, Mark)
+        True
+
+      Make sure that the `Mark` implements the `IMarkContained` interface:
+
+        >>> from zope.interface.verify import verifyClass
+        >>> verifyClass(IMarkContained, Mark)
+        True
+
+      An example of checking the url of Mark::
+
+        >>> mk = Mark()
+        >>> mk.url
+        u'http://www.zope.org'
+        >>> mk.url = u'http://www.python.org'
+        >>> mk.url
+        u'http://www.python.org'
+    
+      An example of checking the description of Mark::
+
+        >>> mk = Mark()
+        >>> mk.description
+        u''
+        >>> mk.description = u'Zope Project Web Site'
+        >>> mk.description
+        u'Zope Project Web Site'
+      """
+
+      implements(IMark, IMarkContained)
+
+      url = u"http://www.zope.org"
+      description = u""
+
+
+  class BookMarker(BTreeContainer):
+      """Implementation of a IBookMarker using B-Tree Container
+
+      Make sure that the `BookMarker` implements the `IBookMarker` interface::
+
+        >>> from zope.interface.verify import verifyClass
+        >>> verifyClass(IBookMarker, BookMarker)
+        True
+
+      An example of changing the name of BookMarker::
+
+        >>> bm = BookMarker()
+        >>> bm.name
+        u''
+        >>> bm.name = u'MyBookMarker'
+        >>> bm.name
+        u'MyBookMarker'
+      """
+
+      implements(IBookMarker)
+
+      name = u""
+
+See we have written doctests along with the implementations, this provides
+example driven unit testing.
+
+Now configuration (save in configure.zcml)::
+
+  <configure
+      xmlns="http://namespaces.zope.org/zope"
+      xmlns:browser="http://namespaces.zope.org/browser">
+
+    <interface
+        interface=".interfaces.IBookMarker"
+        type="zope.app.content.interfaces.IContentType"
+        />
+
+    <content class=".bookmarker.BookMarker">
+      <implements
+          interface="zope.app.annotation.interfaces.IAttributeAnnotatable"
+          />
+      <implements
+          interface="zope.app.container.interfaces.IContentContainer" 
+          />
+      <factory
+          id="boom.bookmarker.BookMarker"
+          description="Book Marker" 
+          />
+      <require
+          permission="zope.ManageContent"
+          interface=".interfaces.IBookMarker"
+          />
+      <require
+          permission="zope.ManageContent"
+          set_schema=".interfaces.IBookMarker"
+          />
+    </content>
+
+    <interface
+        interface=".interfaces.IMark"
+        type="zope.app.content.interfaces.IContentType"
+        />
+
+    <content class=".bookmarker.Mark">
+      <implements
+          interface="zope.app.annotation.interfaces.IAttributeAnnotatable"
+          />
+      <factory
+          id="boom.bookmarker.Mark"
+          description="A book mark." 
+          />
+      <require
+          permission="zope.ManageContent"
+          interface=".interfaces.IMark"/>
+      <require
+          permission="zope.ManageContent"
+          set_schema=".interfaces.IMark"
+          />
+    </content>
+
+    <browser:addform
+        label="Add Book Marker"
+        name="AddBookMarker.html"
+        schema="boom.interfaces.IBookMarker"
+        content_factory="boom.bookmarker.BookMarker"
+        fields="name"
+        permission="zope.ManageContent"
+        />
+
+    <browser:addMenuItem
+        class=".bookmarker.BookMarker"
+        title="Book Marker"
+        permission="zope.ManageContent"
+        view="AddBookMarker.html"
+        />
+
+    <browser:editform
+        schema="boom.interfaces.IBookMarker"
+        for="boom.interfaces.IBookMarker"
+        label="Change Book Marker"
+        name="edit.html"
+        permission="zope.ManageContent"
+        menu="zmi_views" title="Edit" 
+        />
+
+  <browser:containerViews
+      for="boom.interfaces.IBookMarker"
+      index="zope.View"
+      contents="zope.View"
+      add="zope.ManageContent"
+      />
+
+  <browser:addform
+      label="Add Mark"
+      name="AddMark.html"
+      schema="boom.interfaces.IMark"
+      content_factory="boom.bookmarker.Mark"
+      fields="url description"
+      permission="zope.ManageContent"
+      />
+
+  <browser:addMenuItem
+      class="boom.bookmarker.Mark"
+      title="Mark"
+      description="URL of Website"
+      permission="zope.ManageContent"
+      view="AddMark.html"
+      />
+
+  <browser:editform
+      schema="boom.interfaces.IMark"
+      for="boom.interfaces.IMark"
+      label="Change Mark"
+      fields="url description"
+      name="edit.html"
+      permission="zope.ManageContent"
+      menu="zmi_views" title="Edit" 
+      />
+
+  </configure>
+
+Is n't it self explanatory? "no!" then ok! we will discuss Zope Configuration
+Markup Language (ZCML) briefly.
+
+We can also write functional tests::
+  import unittest
+  from zope.app.testing.functional import BrowserTestCase
+
+  class MarkTest(BrowserTestCase):
+
+      def testMarkDetails(self):
+          pass
+
+
+  def test_suite():
+      return unittest.TestSuite((
+          unittest.makeSuite(MarkTest),
+          ))
+
+  if __name__ == '__main__':
+      unittest.main(defaultTest='test_suite')
+
+As the last step to work our applications, put the following line 
+in your $ZOPE3INSTANCE/etc/package-icludes/boom-configure.zcml::
+
+ <include package="boom"/>
+
+Now you registered your package.
+
+Run zope again, then open your browser, add BookMarker.
+
+Then add few marks.
+
+Now you want to arrange your your marks in better way, don't you.
+For the time being, just relax, then we will create a view book marks.

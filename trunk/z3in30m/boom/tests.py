@@ -9,7 +9,7 @@ from boom.bookmarker import BookMarker, Mark
 
 class BookMarkerContainerTest(TestSampleContainer):
     
-    def makeTestObject(self):
+    def makeBookMarkerObject(self):
         return BookMarker()
 
 def test_suite():
