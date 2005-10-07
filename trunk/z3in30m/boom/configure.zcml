@@ -121,11 +121,4 @@
       title="Marks"
       />
 
-<!--
-   <defaultView
-      for="zissue.interfaces.IZissue"
-      name="zissues.html"
-      />
--->
-
 </configure>

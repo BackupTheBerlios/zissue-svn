@@ -70,13 +70,17 @@ by one and unit tests succeeds!. I have given the source code of
 BookMarker here: `boom.tar.bz2`_
 
 .. _boom.tar.bz2:
-  http://zissue.berlios.de/downloads/boom.tar.bz2
+  ftp://ftp.berlios.de/pub/zissue/boom.tar.bz2
 
 Your code will be placed at $HOME/myzope/lib/python/boom
 
 First create a file *interfaces.py* where we will keep our interfaces.
 Later we will implement these interfaces one by one, with strong support
 of unit testing.
+
+
+Interfaces
+----------
 
 Here is our interface.py::
 
@@ -135,6 +139,10 @@ in a container object of IBookMarker. We will implement IMark along
 with IMarkContained as a constraint interface, so that IMark
 will be only contained in IBookMarker.
 
+
+Unit Testing
+------------
+
 Now create *tests.py* and put following content there::
 
   import unittest
@@ -161,6 +169,10 @@ Now create *tests.py* and put following content there::
 
 Actually, we are not writing any unit tests here, but this will make
 our doc tests working automatically.
+
+
+Real coding!
+------------
 
 Now let's move on to the implementation (bookmarker.py)::
 
@@ -237,6 +249,10 @@ Now let's move on to the implementation (bookmarker.py)::
 
 See we have written doctests along with the implementations, this provides
 example driven unit testing.
+
+
+Configuration
+-------------
 
 Now configuration (save in configure.zcml)::
 
@@ -351,12 +367,27 @@ Now configuration (save in configure.zcml)::
       menu="zmi_views" title="Edit" 
       />
 
+  <browser:page
+      name="marks.html"
+      for="boom.interfaces.IBookMarker"
+      class=".browser.BookMarks"
+      template="marks.pt"
+      permission="zope.Public"
+      menu="zmi_views"
+      title="Marks"
+      />
+
   </configure>
 
 Is n't it self explanatory? "no!" then ok! we will discuss Zope Configuration
 Markup Language (ZCML) briefly.
 
+
+Functional testing
+------------------
+
 We can also write functional tests::
+
   import unittest
   from zope.app.testing.functional import BrowserTestCase
 
@@ -374,6 +405,10 @@ We can also write functional tests::
   if __name__ == '__main__':
       unittest.main(defaultTest='test_suite')
 
+
+Just run it
+-----------
+
 As the last step to work our applications, put the following line 
 in your $ZOPE3INSTANCE/etc/package-icludes/boom-configure.zcml::
 
@@ -387,3 +422,62 @@ Then add few marks.
 
 Now you want to arrange your your marks in better way, don't you.
 For the time being, just relax, then we will create a view book marks.
+
+
+Views:
+------
+
+create a file named browser.py with following content::
+
+  from boom.interfaces import IMark
+
+  class BookMarks:
+
+      def __init__(self, context, request, base_url=''):
+          self.context = context
+          self.request = request
+          self.base_url = base_url
+
+      def listMarks(self):
+          marks = []
+          for name, child in self.context.items():
+              if IMark.providedBy(child):
+                  info = {}
+                  info['url'] = child.url
+                  info['description'] = child.description
+                  marks.append(info)
+          return marks
+
+Then one template (marks.pt)::
+
+  <html metal:use-macro="views/standard_macros/view">
+    <body>
+      <div metal:fill-slot="body">
+
+        <div class="row">
+          <div class="label">Book Marks:</div>
+          <br/><br/>
+            <li tal:repeat="item view/listMarks">
+
+              <a href="" tal:attributes="href item/url">
+                 <span tal:content="item/url">Link</span>
+              </a>
+              <pre tal:content="item/description">Description</pre>
+              <br/>
+
+            </li>
+        </div>
+
+      </div>
+    </body>
+  </html>
+ 
+Now by clicking on "Marks" tab you can see all book marks.
+
+Ok! this is not the end, just the beginning of your study.
+
+
+Now what?
+---------
+
+Now you can start learning Zope3 in details.
