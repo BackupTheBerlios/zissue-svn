@@ -2,15 +2,15 @@
 import unittest
 from zope.app.testing.functional import BrowserTestCase
 
-class MarkTest(BrowserTestCase):
+class BookMarksTest(BrowserTestCase):
 
-    def testMarkDetails(self):
+    def testMarksListing(self):
         pass
 
 
 def test_suite():
     return unittest.TestSuite((
-        unittest.makeSuite(MarkTest),
+        unittest.makeSuite(BookMarksTest),
         ))
 
 if __name__ == '__main__':

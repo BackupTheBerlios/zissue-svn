@@ -2,7 +2,7 @@ Zope3 In 30 Minutes
 ===================
 
 :Author: Baiju M <baiju.m.mail AT gmail.com>
-:Version: 0.1.2
+:Version: 0.1.3
 :Copyright: (C) 2005 Baiju M, Placed under GNU GPL version 2,
              or (at your option) any later version
 
@@ -22,8 +22,8 @@ And why should I ...?
 ---------------------
 
 If you are looking for a Pythonic framework for web application development,
-just continue reading.  Here I am not going make a new definition for 
-*What is Pythonic?* :) .  Though I will try to answer your "why?" questions.
+just continue reading.  And I am not going make a new definition for 
+*What is Pythonic?* :) .  Here I will try to answer your "why?" questions.
 
 Keywords
 --------
@@ -31,14 +31,13 @@ Keywords
 Python, Zope, Interface, Component, ZCML, ZMI, Adapter, View,
 Event, Service, Utility, Principal.
 
-So lets start...
-----------------
+So let's start...
+-----------------
 
-Zope3 is the third generation of Zope (Z Object Publishing Environment), 
-a framework for web application development.  You can download Zope 3.1 from
-http://www.zope.org/Products/Zope3 .  After installation (as root :
-./configure;make;make install) you have to make an instance 
-(don't worry! just do it) as a normal user.  To do so::
+Zope3 is the third generation of Zope, a framework for web applications.
+You can download Zope 3.1 from http://www.zope.org/Products/Zope3 .
+After installation (as root : ./configure;make;make install) 
+you have to make an instance (don't worry! just do it).  To do so::
 
   $ cd /usr/local/Zope-3.1.0/bin
   $ ./mkzopeinstance --dir=$HOME/myzope --user=admin:secret123
@@ -66,7 +65,7 @@ Oh! sorry! I can't put it in one sentence, you better learn and
 practice Extreme Programming http://en.wikipedia.org/wiki/Extreme_programming.
 Anyway, after your initial design, you will write interfaces.
 Let us hope Python 3.0 will make it much easier.  Then you will write
-unit tests, see your ideas became very concrete!.  Now you write your
+unit tests, now your ideas become very concrete!.  At last you write your
 real code, you will be satisfied when you implement interfaces one
 by one and unit tests succeeds!. I have given the source code of
 BookMarker here: `boom.tar.bz2`_
@@ -84,7 +83,7 @@ of unit testing.
 Interfaces
 ----------
 
-Here is our interface.py::
+Here is our interfaces.py::
 
   from zope.interface import Interface
   from zope.schema import Text, TextLine, Field
@@ -94,7 +93,7 @@ Here is our interface.py::
   from zope.app.container.interfaces import IContained, IContainer
 
   class IMark(Interface):
-      """This is a book mark."""
+      """This is the book mark object."""
 
       url = TextLine(
           title=u"URL/Link",
@@ -109,11 +108,11 @@ Here is our interface.py::
           required=False)
 
   class IBookMarker(IContainer):
-      """This is the container for all Marks."""
+      """This is the container for all book marks."""
 
       name = TextLine(
           title=u"Name of BookMarker",
-          description=u"Name of BookMarker",
+          description=u"A name for BookMarker",
           default=u"",
           required=True)
 
@@ -124,17 +123,17 @@ Here is our interface.py::
   
 
   class IMarkContained(IContained):
-      """An Mark can only put in a BookMarker"""
+      """A book mark can only contain in a BookMarker"""
 
       __parent__ = Field(
           constraint = ContainerTypesConstraint(IBookMarker))
   
 
-The first interface IMark has two attributes, one is URL of the site
+The first interface IMark has two attributes, one is the URL of the site
 and the other one is the description.  Please note IMark is not a
 *class* even though we used Python's class definition.  We inherited
 from Interface to make it an interface.  Second one is a container
-interface, here actually we extended IContainer.  By using
+interface, which is an extended IContainer interface.  By using
 this container interface we can persist our data (instances of
 IMark implementations).  We will put all objects of IMark 
 in a container object of IBookMarker.  We will implement IMark along
@@ -145,7 +144,7 @@ will be only contained in IBookMarker.
 Unit Testing
 ------------
 
-Now create *tests.py* and put following content there::
+Now create *tests.py* and put the following content there::
 
   import unittest
   from zope.testing.doctestunit import DocTestSuite
@@ -169,9 +168,13 @@ Now create *tests.py* and put following content there::
   if __name__ == '__main__':
       unittest.main(defaultTest='test_suite') 
 
-Actually, we are not writing any unit tests here, but this will make
+Actually, we are not written any unit tests here, but this will make
 our doc tests working automatically.
 
+To run the unit test::
+
+  $ cd $HOME/my/zope/lib
+  $ ../bin/test -vpu --dir boom
 
 Real coding!
 ------------
@@ -227,7 +230,7 @@ Now let's move on to the implementation (bookmarker.py)::
 
 
   class BookMarker(BTreeContainer):
-      """Implementation of a IBookMarker using B-Tree Container
+      """Implementation of IBookMarker using B-Tree Container
 
       Make sure that the `BookMarker` implements the `IBookMarker` interface::
 
@@ -249,8 +252,9 @@ Now let's move on to the implementation (bookmarker.py)::
 
       name = u""
 
-See we have written doctests along with the implementations, this provides
-example driven unit testing.
+We have written doctests along with the implementations, this provides
+example driven unit testing.  Doctests are accompanied with examples,
+so it is called example driven unit testing.
 
 
 Configuration
@@ -382,7 +386,10 @@ Now configuration (save in configure.zcml)::
   </configure>
 
 Is it self explanatory? "no...!" then ok! we will discuss Zope Configuration
-Markup Language (ZCML) briefly.
+Markup Language (ZCML) briefly later.  Actually, if you are familiar with
+ZCML this configuartion will be more than self explanatory.  It will give
+you an overall idea about the entire application.  Now you might think,
+it is not Pythonic :(  Hey! think twice!.
 
 
 Functional testing
@@ -393,15 +400,15 @@ We can also write functional tests::
   import unittest
   from zope.app.testing.functional import BrowserTestCase
 
-  class MarkTest(BrowserTestCase):
+  class BookMarksTest(BrowserTestCase):
 
-      def testMarkDetails(self):
+      def testMarksListing(self):
           pass
 
 
   def test_suite():
       return unittest.TestSuite((
-          unittest.makeSuite(MarkTest),
+          unittest.makeSuite(BookMarksTest),
           ))
 
   if __name__ == '__main__':
@@ -412,22 +419,20 @@ Just run it
 -----------
 
 As the last step to work our applications, put the following line 
-in your $ZOPE3INSTANCE/etc/package-icludes/boom-configure.zcml::
+in your $HOME/myzope/etc/package-icludes/boom-configure.zcml::
 
  <include package="boom"/>
 
 Now you registered your package.
 
-Run zope again, then open your browser, add BookMarker.
+Run zope again, then open your browser, add a BookMarker and few book marks.
 
-Then add few book marks.
-
-Now you want to arrange your your marks in a better way, don't you?.
+Now you want to arrange your your book marks in a better way, don't you?.
 For the time being, just relax, then we will create a view for book marks.
 
 
-Views:
-------
+Views
+-----
 
 Now create a file named browser.py with following content::
 
@@ -482,8 +487,11 @@ Ok! this is not the end, just the beginning of your study.
 Now what?
 ---------
 
-Now you can start learning Zope3 in details, using Zope3 book.
+Now you can start learning Zope3 in detail, using Zope3 book.
 Also join zope3-users mailing list.
+
+A good introductory book is also available in print, visit:
+http://worldcookery.com/
 
 Just one more thing: I want to improve this document, so don't 
 hesitate to write your feedbacks to baiju.m.mail at gmail.com

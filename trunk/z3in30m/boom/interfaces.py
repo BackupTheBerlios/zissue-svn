@@ -27,7 +27,7 @@ from zope.app.container.constraints import ItemTypePrecondition
 from zope.app.container.interfaces import IContained, IContainer
 
 class IMark(Interface):
-    """This is a book mark."""
+    """This is the book mark object."""
 
     url = TextLine(
         title=u"URL/Link",
@@ -42,11 +42,11 @@ class IMark(Interface):
         required=False)
 
 class IBookMarker(IContainer):
-    """This is the container for all Marks."""
+    """This is the container for all book marks."""
 
     name = TextLine(
         title=u"Name of BookMarker",
-        description=u"Name of BookMarker",
+        description=u"A name for BookMarker",
         default=u"",
         required=True)
 
@@ -57,7 +57,7 @@ class IBookMarker(IContainer):
 
 
 class IMarkContained(IContained):
-    """An Mark can only put in a BookMarker"""
+    """A book mark can only contain in a BookMarker"""
 
     __parent__ = Field(
         constraint = ContainerTypesConstraint(IBookMarker))

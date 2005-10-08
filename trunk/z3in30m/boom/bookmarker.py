@@ -65,7 +65,7 @@ class Mark(Contained):
 
 
 class BookMarker(BTreeContainer):
-    """Implementation of a IBookMarker using B-Tree Container
+    """Implementation of IBookMarker using B-Tree Container
 
     Make sure that the `BookMarker` implements the `IBookMarker` interface::
 
