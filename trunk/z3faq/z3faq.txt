@@ -3,7 +3,7 @@ Zope3 FAQ (Unofficial)
 
 :Editor: Baiju M <baiju.m.mail AT gmail.com>
 :Contributors:
-:Version: 0.1
+:Version: 0.1.1
 :Copyright: This document is placed under public domain.
 
 .. contents::
@@ -66,8 +66,24 @@ ZMI
 Testing
 -------
 
+How to run a particular test from a package?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Go to your $ZOPE3INSTANCE/lib, then::
+
+  $ cd $HOME/myzope/lib
+  $ ../bin/test.py -vpu --dir package/tests test_this_module
+
+
 Views
 -----
+
+How to get the parent of location?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+TODO:
+Use zapi.getParents.
+
 
 Events
 ------
@@ -92,4 +108,12 @@ Zope3 on Mac OS
 
 Miscellaneous
 -------------
+
+How to record a session?
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+To record a session::
+
+  $ mkdir record
+  $ tcpwatch.py -L8081:8080 -r record
 
