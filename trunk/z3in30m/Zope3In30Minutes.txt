@@ -2,7 +2,7 @@ Zope3 In 30 Minutes
 ===================
 
 :Author: Baiju M <baiju.m.mail AT gmail.com>
-:Version: 0.1.3
+:Version: 0.1.4
 :Copyright: (C) 2005 Baiju M, Placed under GNU GPL version 2,
              or (at your option) any later version
 
@@ -22,7 +22,7 @@ And why should I ...?
 ---------------------
 
 If you are looking for a Pythonic framework for web application development,
-just continue reading.  And I am not going make a new definition for 
+just continue reading.  And I am *not* going to make a new definition for 
 *What is Pythonic?* :) .  Here I will try to answer your "why?" questions.
 
 Keywords
@@ -36,8 +36,12 @@ So let's start...
 
 Zope3 is the third generation of Zope, a framework for web applications.
 You can download Zope 3.1 from http://www.zope.org/Products/Zope3 .
-After installation (as root : ./configure;make;make install) 
-you have to make an instance (don't worry! just do it).  To do so::
+To install untar Zope3 source package, then as root::
+
+  # cd Zope-3.1.0
+  # ./configure;make;make install
+
+After installation you have to make an instance (don't worry! just do it).  To do so::
 
   $ cd /usr/local/Zope-3.1.0/bin
   $ ./mkzopeinstance --dir=$HOME/myzope --user=admin:secret123
@@ -173,7 +177,7 @@ our doc tests working automatically.
 
 To run the unit test::
 
-  $ cd $HOME/my/zope/lib
+  $ cd $HOME/myzope/lib
   $ ../bin/test -vpu --dir boom
 
 Real coding!
@@ -490,8 +494,117 @@ Now what?
 Now you can start learning Zope3 in detail, using Zope3 book.
 Also join zope3-users mailing list.
 
+There is a good Zope3 quick start guide by Benji York:
+http://www.benjiyork.com/quick_start/
+
 A good introductory book is also available in print, visit:
 http://worldcookery.com/
 
 Just one more thing: I want to improve this document, so don't 
 hesitate to write your feedbacks to baiju.m.mail at gmail.com
+
+
+Hey! What's time now?
+---------------------
+
+Oh! it's only 10 minutes since we started reading this article.
+We got 20 more minutes to explain what's happened here.
+So let's look back again.
+
+
+Installation and Configuration
+------------------------------
+
+First we briefly discussed about installation.
+You can download Zope 3.1.0 or later for your major works.
+Install Zope3 as root, though it is not necessary.  When you
+experiment  with Zope3, make instance as a normal user. For production
+systems, you get the additional advantage of OS level security.
+Since we manually installed Zope3 (as root), the default installation
+path will be /usr/local/Zope-3.1.x .  When making zope instance,
+you have to specify zope manager's user name and password.
+
+In your Zope 3 instance directory, there are few directories with
+specific purposes. Here ownwards I will be using $ZOPE3INSTANCE to
+refer your instance directory
+
+$ZOPE3INSTANCE/etc
+  In 'etc' you can see some configuration files.
+  In $ZOPE3INSTANCE/etc/zope.conf you can edit port numbers
+  of http and ftp servers.
+
+$ZOPE3INSTANCE/var
+  Zope saving all data here. Backup this directory regulary. 
+
+$ZOPE3INSTANCE/bin
+  Few utility scripts. 'runzope' and 'test' are already familiar to you.
+  'pyskel' script will be very useful for creating template codes from
+  interfaces, Example::
+
+    $ $ZOPE3INSTANCE/bin/pyskel  boom.interfaces.IMark > file.py
+    
+$ZOPE3INSTANCE/lib/python
+  As I said earlier you can place your Zope3 packages here.
+  By default this won't be in your Python path.
+  You can also place your package in any standard Python path.
+
+
+Why should I code like this?
+----------------------------
+
+When we started discussing BookMarker, the first word I coined is
+Extreme Programming (XP).  I strongly recommend you to read about
+Extreme Programming, it will really influence you to write code in
+Zope3 way (directly and indirectly).  Ok, one causion: many XPers
+believe that frameworks are bad.  Here again I cann't give an answer
+in one sentence, so you find out yourself.  "Extreme Programming
+Explained" by Kent Beck will be a good starting point for your study.
+By the way, another classic book which you can read is "Design
+Patterns" by Gang of Four.  In this book they say : 'Program to an
+interface, not to an implementation'.  To simulate a formal definition
+of interfaces in C++, they used classes with virtual functions.
+Just like this, in Python we will use zope.interface.Interfce
+inherited metaclass for defining an interface.  There is every chance
+for an 'interface' concept in Python language by version 3.0 .
+According to Extreme Programming: 'The four basic activities of
+development are coding, testing, listening, and designing.'
+Zope3 makes your software testing, a breeze.  You can write unit and
+functional tests very easily.
+
+
+Let's look into interfaces
+--------------------------
+
+I hope you are familiar with the concept of interfaces.
+Anyway when we speak about an interface, we meant it to
+use with reference to an object (i.e, an instance of a class).
+For example if 'A' is a class which implements 'IA', and 'a'
+is an instance of 'A', then 'IA' is the interface of 'a', got it?
+But normally we only deals with the interface and its implementing
+class.
+
+In our interface.py we defined three interfaces.
+
+
+Unit testing re-visited
+-----------------------
+
+
+Let's talk about implementations
+--------------------------------
+
+
+Why and how functional testing?
+-------------------------------
+
+
+Views and ZPT
+-------------
+
+
+The things we didn't mentioned
+------------------------------
+
+
+The End
+-------
