@@ -1,0 +1,21 @@
+***************
+Zope3 Distilled
+***************
+
+:Author: Baiju M <baiju.m.mail AT gmail.com>
+:Version: 0.1.1
+:Copyright: (C) 2005 Baiju M, Placed under GNU GPL version 2,
+             or (at your option) any later version
+
+.. contents::
+
+Introduction
+============
+
+This small book aims to provide a brief guide to Zope3.
+
+Overview
+--------
+
+Organisation of this book
+~~~~~~~~~~~~~~~~~~~~~~~~~
