@@ -563,7 +563,7 @@ Why should I code like this?
 
 When we started discussing BookMarker, the first word I coined is
 Extreme Programming (XP).  I strongly recommend you to read about
-Extreme Programming, it will really influence you to write code in
+Extreme Programming.  It will really influence you to write code in
 Zope3 way (directly and indirectly).  Ok, one causion: many XPers
 believe that frameworks are bad.  Here, I can not give an answer
 in one sentence, so you find out yourself.  "Extreme Programming
@@ -600,20 +600,48 @@ zope.schema package to specify these attributes.
 
 As we mentioned earlier `IBookMarker` is a container interface.
 We extended `IContainer` interface with one `name` attribute.
-Also we put one item type pre-condition.  So `IBookMarker` object can only
-contain an `IMark` object.  Now before moving to next section, please note
-from which packages and modules we imported different classes/interfaces.
-Just open the sources of those packages, and see how well documented
-they are!.  Some documentation are written in seperate ReStructuredText
-files with unit testing, this is the Zope3 way of unit testing.
+Also we put one item type pre-condition.  So `IBookMarker` object can
+only contain an `IMark` object.  Now before moving to next section,
+please note from which packages and modules we imported different
+classes/interfaces. Just open the sources of those packages, and see
+how well documented they are!.  Some documentation are written in
+seperate ReStructuredText files with unit testing, this is the Zope3
+way of unit testing. 
 
 
 Unit testing re-visited
 -----------------------
 
+We wrote our test in a file named *tests.py*.  You can also write
+tests in a package named *tests*.  All test modules under this package
+should have 'test_' prefix.  We also automated our doctests written
+along with implementation.  To test our `BookMarker` container, we
+inherited `TestSampleContainer`.  For testing containers, you can
+stick with `unittest` module.  Also use where you want more reusablity.
+Anyway, we will integrate all doctests with `unittest` module. This
+will help us to run tests automatically, from a single point.
+
 
 Let's talk about implementations
 --------------------------------
+
+In the first line of *bookmarker.py* we set a special variable
+attribute __docformat__ = 'restructuredtext'.  Our documentation
+strings are written in ReStructuredText format.  I strongly reccomend
+you to use ReST for all kinds of Python documentationss. (This article
+is written in ReST: svn co svn://svn.berlios.de/zissue/trunk/z3in30m).
+
+First we imported `implements` function from `zope.interface` package.
+Using this function we can say a class implements one or more
+interfaces.  `BTreeContainer` is full implementation of `IContainer`
+interface.  We inherit it to implement our Container interfaces.
+Similarly `Contained` is an implementation of `IContained`.  `Mark`
+class implements both `IMark` and `IMarkContained`.  `IMarkContained`
+is an extended interface of `IContained`.  So by inheriting
+`Contained` class we get a partial implementation of our interfaces.
+Now the remaining things to implement is two attributes, url and
+description.  Similarly majority of `IBookMarker` is implemented in
+`BTreeContainer`.  I hope documentation strings are self explanatory.
 
 
 ZCML, the oasis in Zope3
@@ -626,12 +654,36 @@ Views and ZPT
 -------------
 
 
-Why and how functional testing?
--------------------------------
-
-
 The things we didn't mentioned
 ------------------------------
+
+Please go to the last section, otherwise you can not finish this
+article in 30 minutes.
+
+Ofcourse, in an introductory document we can only cover a fraction of
+the whole technology.  Here I have omitted many things for various
+reasons.
+
+In the beginning, I said just one assumptiion about you.  I really
+meant many other things.  Surely you should be a Python programmer.
+You should know basic administration.  Basic understanding of web
+technologies.  And ofcourse, willing to spend time :)
+
+While installation you might get error due to Python development
+libraries not installed.  If you know Python and system administration
+you will just run: apt-get install python-dev
+Similary you have created __init__.py file to make our package working.
+
+If you are interested in Zope3 by now, surely you will explore more in
+future.  While you exploring, you will see that doctests can be
+written in stand alone text files.  Similarly you will understand lots
+of other things.
+
+One thing, I can assure you is that zope is really a matured
+framework.  It has almost 9 year history of successfull running. Many
+technologies evolved through zope.  Infact zope and zope developers
+has influenced Python language itself.  Yes! it is one of the gratest
+Python application ever written.
 
 
 The End

@@ -4,6 +4,34 @@ Zope3 in 30 minutes - A quick tutorial for Zope3
 Copyright 2005 Baiju M <baiju.m.mail@gmail.com> 
 
 
+My considerations while writing this article
+--------------------------------------------
+
+ 1. Zope3 introducing tutorial to motivate Python
+    programmers.
+
+ 2. The document should not be too formal, also not too informal.
+
+ 3. Grammar mistakes and wrong usage of words/phrases should
+    be avoided.
+
+ 4. Don't cover all aspects of every problem.
+
+ 5. A sentence shouldn't exceed 160 characters, unless an URL
+    comes in between.
+
+ 6. Every paragraph should contain something motivative.
+
+ 7. After every full stop, there must be two spaces,
+    unless it comes at the end the line.
+
+ 8. All sections should end with two blank lines.
+
+ 9. Within two days after reading this article, the reader can
+    access google.com
+
+ 10. Zope3 book is available for reference.
+
 Saturday, October 01 2005
 
 --
