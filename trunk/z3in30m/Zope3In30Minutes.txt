@@ -653,7 +653,7 @@ ZCML Explained
 
 Let me ask one question, which you are going to face many times later.
 Do you think a Programming language should be used to write
-configuration files?  If yes, why?.  Why we can not use a text files
+configuration files?  If yes, why?.  Why we can not use a text file
 with some conventions or markups.
 
 Anyway, ZCML is the XML based configuration system for Zope3.
@@ -721,12 +721,12 @@ your journey through Zope3 world.  So, good luck.
 About the author
 ----------------
 
-I am Python programmer from `Kerala`_.  I love Python.
+I am a Python programmer from `Kerala`_.  I love Python.
 Previously I have worked for Malayalam i18n & l10n in free softwares.
 I have worked for Free Software Foundation of India (as a job).
 I was a `Koha`_ consultant for some time.
 Currently I am doing lots of Python, PyGTK and PostgreSQL (about one
-and half years).  I am a prod GNU Emacs user.
+and half years).  I am a proud GNU Emacs user.
 
 .. _Kerala: http://en.wikipedia.org/wiki/Kerala
 .. _Koha: http://www.kohadocs.org/CDS_ISIS_to_Koha.html
