@@ -512,7 +512,7 @@ http://worldcookery.com/
 Just one more thing: I want to improve this document, so don't 
 hesitate to write your feedback to: baiju.m.mail AT gmail.com
 
-.. _Zope3 book: http://www.zope.org/Wikis/DevSite/Projects/ComponentArchitecture/FrontPage/Zope3Book
+.. _Zope3 book: http://dev.zope.org/Zope3/Zope3Book
 
 
 Hey! What's time now?
@@ -565,7 +565,7 @@ $ZOPE3INSTANCE/lib/python
 Why should I code like this?
 ----------------------------
 
-When we started discussing BookMarker, the first word I coined is
+When we started discussing BookMarker, the first word I emphasized is
 Extreme Programming (XP).  I strongly recommend you to read about
 Extreme Programming.  It will really influence you to write code in
 Zope3 way (directly and indirectly).  Ok, one causion: many XPers
@@ -578,7 +578,7 @@ interface, not to an implementation'.  To simulate a formal definition
 of interfaces in C++, they used classes with virtual functions.
 Just like this, in Python we will use zope.interface.Interfce
 inherited metaclass for defining an interface.  There is every chance
-for an 'interface' concept in Python language by version 3.0 .
+for an explicit 'interface' concept in Python language by version 3.0 .
 According to Extreme Programming: 'The four basic activities of
 development are coding, testing, listening, and designing.'
 Zope3 makes your software testing, a breeze.  You can write unit and
@@ -596,11 +596,13 @@ is an instance of 'A', then 'IA' is the interface of 'a', got it?
 But normally we only deals with the interface and its implementing
 class.
 
-In our *interfaces.py* we defined three interfaces.
-The first interface 'IMark' defines a book mark object.
-A book mark has two attributes, one is the url
-and another one is the description.  We used schemas available at
-zope.schema package to specify these attributes.
+In our *interfaces.py* we defined three interfaces.  The first
+interface 'IMark' defines a book mark object.  A book mark has two
+attributes, one is the url and another one is the description.  We
+used fields available at zope.schema package to specify these
+attributes.  A schema is an interface with attributes are defined
+using zope.schema fields (there are classes).  So, our `IBookMarker`,
+`IMark`, and `IMarkContained` are schemas, and not simple interfaces.
 
 As we mentioned earlier `IBookMarker` is a container interface.
 We extended `IContainer` interface with one `name` attribute.
@@ -637,7 +639,7 @@ is written in ReST: svn co svn://svn.berlios.de/zissue/trunk/z3in30m).
 
 First we imported `implements` function from `zope.interface` package.
 Using this function we can say a class implements one or more
-interfaces.  `BTreeContainer` is full implementation of `IContainer`
+interfaces.  `BTreeContainer` is a full implementation of `IContainer`
 interface.  We inherit it to implement our Container interfaces.
 Similarly `Contained` is an implementation of `IContained`.  `Mark`
 class implements both `IMark` and `IMarkContained`.  `IMarkContained`
