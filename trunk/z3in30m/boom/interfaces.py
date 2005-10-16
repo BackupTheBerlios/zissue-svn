@@ -16,8 +16,7 @@
 ## along with BookMarker; if not, write to the Free Software
 ## Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-"""BookMarker interfaces
-"""
+"""BookMarker interfaces."""
 
 from zope.interface import Interface
 from zope.schema import Text, TextLine, Field
