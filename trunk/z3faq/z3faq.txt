@@ -1,12 +1,18 @@
+======================
 Zope3 FAQ (Unofficial)
 ======================
 
-:Editor: Baiju M <baiju.m.mail AT gmail.com>
-:Contributors:
-:Version: 0.1.1
-:Copyright: This document is placed under public domain.
+:Date: $Date$
+:Revision: $Revision$
+:Web site: http://zissue.berlios.de/z3/z3faq.html
+
+.. Note to Contibutors : The question title may be a summary of 
+   the question, with the full question in the section body.
+
 
 .. contents::
+.. sectnum::
+
 
 Introduction
 ------------
@@ -24,7 +30,8 @@ How to contribute to this FAQ
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Check out Restructured Text from svn://svn.berlios.de/zissue/trunk/z3faq,
-then edit *z3faq.txt* and send your patch to baiju.m.mail at gmail.com::
+then edit *z3faq.txt* and send your patch to baiju.m.mail at gmail.com
+or submit at berlios patch manager::
 
   $ svn checkout svn://svn.berlios.de/zissue/trunk/z3faq
   $ cd z3faq
@@ -36,7 +43,8 @@ How to write a big question, which is very long and that cannot read in one brea
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Just like this, but we can make questions as much short as we can without
-sacrificing its meaning. 
+sacrificing its meaning. Another option is to make the question title 
+a summary of the real question, with the full question in the section body.
 
 
 Folklore
