@@ -6,6 +6,7 @@ Zope3 FAQ
 :Date: $Date$
 :Revision: $Revision$
 :Web site: http://zissue.berlios.de/z3/z3faq.html
+:Source: http://svn.berlios.de/viewcvs/zissue/trunk/z3faq
 
 .. Note to Contibutors : The question title may be a summary of 
    the question, with the full question in the section body.
@@ -141,3 +142,17 @@ Should I use __docformat___ = 'restructredtext' in Zope3?
 
 Yes, if you are using ReStructredText in docstrings, the default
 is still structured text.
+
+
+Is Zope 3 stable enough to be used in production enviroment?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Zope 3 is used in several larger production sites already.  Public
+applications include `Launchpad`_, `SchoolTool`_ and `Tiks`_. But
+there are several custom solutions written too.  But the development
+of Zope 3 will probably never be done, it will continue untill our all
+needs meets :) 
+
+.. _Launchpad: http://www.launchpad.net
+.. _SchoolTool: http://www.schooltool.org
+.. _Tiks: http://www.tiks.org/
