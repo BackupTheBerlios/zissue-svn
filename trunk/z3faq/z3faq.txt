@@ -1,6 +1,7 @@
-======================
-Zope3 FAQ (Unofficial)
-======================
+=========
+Zope3 FAQ
+=========
+
 
 :Date: $Date$
 :Revision: $Revision$
@@ -25,6 +26,7 @@ General
 -------
 
 General questions about this FAQ, and Zope3.
+
 
 How to contribute to this FAQ
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -56,12 +58,14 @@ Zope3 folklore.
 Zope2 to Zope3
 --------------
 
+
 Component Architecture
 ----------------------
 
 
 Interfaces and Adapters
 -----------------------
+
 
 ZCML
 ----
@@ -74,9 +78,9 @@ ZMI
 Testing
 -------
 
+
 How to run a particular test from a package?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 
 Go to your $ZOPE3INSTANCE/lib, then::
 
@@ -86,6 +90,7 @@ Go to your $ZOPE3INSTANCE/lib, then::
 
 Views
 -----
+
 
 How to get the parent of location?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -101,6 +106,7 @@ Events
 Services and Utilities
 ----------------------
 
+
 Security and Principal
 ----------------------
 
@@ -108,8 +114,10 @@ Security and Principal
 Zope3 on GNU/Linux , `*BSD` and Solaris
 ---------------------------------------
 
+
 Zope3 on Win32 and NT based systems
 -----------------------------------
+
 
 Zope3 on Mac OS
 ---------------
