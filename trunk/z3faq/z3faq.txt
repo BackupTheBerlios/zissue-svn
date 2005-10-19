@@ -77,6 +77,7 @@ Testing
 How to run a particular test from a package?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 Go to your $ZOPE3INSTANCE/lib, then::
 
   $ cd $HOME/myzope/lib
@@ -117,6 +118,7 @@ Zope3 on Mac OS
 Miscellaneous
 -------------
 
+
 How to record a session?
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -125,3 +127,9 @@ To record a session::
   $ mkdir record
   $ tcpwatch.py -L8081:8080 -r record
 
+
+Should I use __docformat___ = 'restructredtext' in Zope3?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Yes, if you are using ReStructredText in docstrings, the default
+is still structured text.
