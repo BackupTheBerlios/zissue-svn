@@ -2,7 +2,7 @@ Zope3 In 30 Minutes
 ===================
 
 :Author: Baiju M <baiju.m.mail AT gmail.com>
-:Version: 0.1.92
+:Version: 0.1.93
 :Copyright: (C) 2005 Baiju M, Placed under GNU GPL version 2,
              or (at your option) any later version
 :Source: http://svn.berlios.de/viewcvs/zissue/trunk/z3in30m
@@ -10,7 +10,8 @@ Zope3 In 30 Minutes
 .. contents::
 
 
-*Important Note*: I assume you are using Debian 3.1 (Sarge) or similar systems.
+*Important Note*: I assume you are using Debian 3.1 (Sarge) or similar
+systems. 
 
 
 Why 30?
@@ -22,30 +23,32 @@ Sorry! Zope3 cannot be introduced in 10 minutes.
 And why should I ...?
 ---------------------
 
-If you are looking for a Pythonic framework for web application development,
-just continue reading.  And I am *not* going to make a new definition for 
-*What is Pythonic?* :) .  Here I will try to answer your "why?" questions.
+If you are looking for a Pythonic framework for web application
+development, just continue reading.  And I am *not* going to make a
+new definition for *What is Pythonic?* :) .  Here I will try to answer
+your "why?" questions.
 
 
 Keywords
 --------
 
-Python, Zope, Interface, Component, ZCML, ZMI, Adapter, View,
-Event, Service, Utility, Principal.
+Python, Zope, Interface, Component, ZCML, ZMI, Adapter, View, Event,
+Service, Utility, Principal, ZODB, ZEO.
 
 
-So let's start...
------------------
+So let's start ...
+------------------
 
-Zope3 is the third generation of Zope, a framework for web applications.
-You can download Zope 3.1 from http://www.zope.org/Products/Zope3 .
-To install untar Zope3 source package, then as root::
+Zope3 is the third generation of Zope, a framework for web
+applications.  You can download Zope 3.1 from Zope products page:
+http://www.zope.org/Products/Zope3 .  To install untar Zope3 source
+package, then as root:: 
 
   # cd Zope-3.1.0
   # ./configure;make;make install
 
-After installation you have to make an instance (don't worry! just do it).
-To do so::
+After installation you have to make an instance (don't worry! just do
+it).  To do so::
 
   $ cd /usr/local/Zope-3.1.0/bin
   $ ./mkzopeinstance --dir=$HOME/myzope --user=admin:secret123
@@ -55,38 +58,41 @@ To start Zope3 server, go to your instance directory, then::
   $ cd ~/myzope
   $ ./bin/runzope
 
-If you get a port error, check check whether 8080 and 8021 is already used by 
-other programs; for the time being, just stop it.  Start your browser , the open
-http://localhost:8080 .  What you see is the Zope Management Interface (ZMI).
-ZMI is your Python prompt, hmm... no! Zope prompt, got it?.  You can login and
-look around to see what's happening.  If you played enough with ZMI, stop it 
-from terminal (Control + C).
+If you get a port error, check check whether 8080 and 8021 is already
+used by other programs; for the time being, just stop it.  Start your
+browser, the open http://localhost:8080 .  What you see is the Zope
+Management Interface (ZMI).  ZMI is your Python prompt, hmm... no!
+Zope prompt, got it?.  You can login and look around to see what's
+happening.  If you played enough with ZMI, stop it from terminal
+(Control + C). 
 
 
 BookMarker : Your first Zope3 app
 ---------------------------------
 
-Yes! we are going to create a Zope3 application, an online book marker.
-Our app will display links to websites and a description for each link.
+Yes! we are going to create a Zope3 application, an online book
+marker.  Our app will display links to websites and a description for
+each link.
 
 So, what you have to think about when you start a Zope3 project.
 Oh! sorry! I can't put it in one sentence, you better learn and 
-practice Extreme Programming http://en.wikipedia.org/wiki/Extreme_programming.
-Anyway, after your initial design, you will write interfaces.
-Let us hope Python 3.0 will make it much easier.  Then you will write
-unit tests, now your ideas become very concrete!.  At last, write your
-real code.  You will be satisfied when you implement interfaces one
-by one and unit tests succeeds!.  I have given the source code of
-BookMarker here: `boom.tar.bz2`_
+practice `Extreme Programming`_ .  Anyway, after your initial design,
+you will write interfaces.  Let us hope Python 3.0 will make it much
+easier.  Then you will write unit tests, now your ideas become very
+concrete!.  At last, write your real code.  You will be satisfied when
+you implement interfaces one by one and unit tests succeeds!.  I have
+given the source code of BookMarker here: `boom.tar.bz2`_ .
 
+.. _Extreme Programming:
+  http://en.wikipedia.org/wiki/Extreme_programming 
 .. _boom.tar.bz2:
   ftp://ftp.berlios.de/pub/zissue/boom.tar.bz2
 
 Our code will be placed at $HOME/myzope/lib/python/boom
 
-First create a file *interfaces.py* where we will keep our interfaces.
-Later we will implement these interfaces one by one, with strong support
-of unit testing.
+First create a file *interfaces.py* where we will keep our
+interfaces. Later we will implement these interfaces one by one, with
+strong support of unit testing.
 
 
 Interfaces
@@ -138,16 +144,16 @@ Here is our interfaces.py::
           constraint = ContainerTypesConstraint(IBookMarker))
   
 
-Our first interface `IMark` has two attributes, one is the URL of the site
-and the other one is the description.  Please note, `IMark` is not a
-*class* even though we used Python's class definition.  We inherited
-from `Interface` to make it an interface.  Second one is a container
-interface, which is an extended `IContainer` interface.  By using
-this container interface we can persist our object (instances of
-`IMark` implementations).  We will put all objects of `IMark`
-in a container object of `IBookMarker`.  We will implement `IMark` along
-with `IMarkContained` as a constraint interface.  So that `IMark` object
-will be only contained in an `IBookMarker` object.
+Our first interface `IMark` has two attributes, one is the URL of the
+site and the other one is the description.  Please note, `IMark` is
+not a *class* even though we used Python's class definition.  We
+inherited from `Interface` to make it an interface.  Second one is a
+container interface, which is an extended `IContainer` interface.  By
+using this container interface we can persist our objects (instances
+of `IMark` implementations).  We will put all objects of `IMark`
+in a container object of `IBookMarker`.  We will implement `IMark`
+along with `IMarkContained` as a constraint interface.  So that
+`IMark` object will be only contained in an `IBookMarker` object.
 
 
 Unit Testing
@@ -208,7 +214,8 @@ Now let's move on to the implementation (bookmarker.py)::
         >>> verifyClass(IMark, Mark)
         True
 
-      Make sure that the `Mark` implements the `IMarkContained` interface:
+      Make sure that the `Mark` implements the `IMarkContained`
+      interface::
 
         >>> from zope.interface.verify import verifyClass
         >>> verifyClass(IMarkContained, Mark)
@@ -242,7 +249,8 @@ Now let's move on to the implementation (bookmarker.py)::
   class BookMarker(BTreeContainer):
       """Implementation of IBookMarker using B-Tree Container
 
-      Make sure that the `BookMarker` implements the `IBookMarker` interface::
+      Make sure that the `BookMarker` implements the `IBookMarker`
+      interface::
 
         >>> from zope.interface.verify import verifyClass
         >>> verifyClass(IBookMarker, BookMarker)
@@ -262,8 +270,9 @@ Now let's move on to the implementation (bookmarker.py)::
 
       name = u""
 
-We have written doctests along with the implementations.  Doctests are 
-accompanied with examples, so it is called example driven unit testing.
+We have written doctests along with the implementations.  Doctests are
+accompanied with examples, so it is called example driven unit
+testing.
 
 
 Configuration
@@ -394,27 +403,30 @@ Now configuration (save in configure.zcml)::
 
   </configure>
 
-Is it self explanatory? "no...!" then ok! we will discuss Zope Configuration
-Markup Language (ZCML) briefly later.  Actually, if you are familiar with
-ZCML this configuartion will be more than self explanatory.  It will give
-you an overall idea about the entire application.  Now you might think,
-it is not Pythonic :(  Hey! think twice!.
+Is it self explanatory? "no...!" then ok! we will discuss Zope
+Configuration Markup Language (ZCML) briefly later.  Actually, if you
+are familiar with ZCML this configuartion will be more than self
+explanatory.  It will give you an overall idea about the entire
+application.  Now you might think, it is not Pythonic :( Hey! think
+twice!.
 
 
 Just run it
 -----------
 
-As the last step to work our application, put the following line 
+As the last step to work our application, put the following line
 in: $HOME/myzope/etc/package-icludes/boom-configure.zcml::
 
  <include package="boom"/>
 
 Now you registered your package.
 
-Run zope again, then open your browser, add a BookMarker and few book marks.
+Run zope again, then open your browser, add a BookMarker and few book
+marks.
 
-Now you want to arrange your your book marks in a better way, don't you?.
-For the time being, just relax, then we will create a view for book marks.
+Now you want to arrange your your book marks in a better way, don't
+you?.  For the time being, just relax, then we will create a view for
+book marks.
 
 
 Views
@@ -545,7 +557,7 @@ hesitate to write your feedback to: baiju.m.mail AT gmail.com
 .. _Zope3 book: http://dev.zope.org/Zope3/Zope3Book
 
 
-Hey! What's time now?
+Hey! what's time now?
 ---------------------
 
 Oh! it's only 10 minutes since we started reading this article.
@@ -553,17 +565,17 @@ We got 20 more minutes to explain what's happened here.
 So let's look back again.
 
 
-Installation and Configuration
+Installation and configuration
 ------------------------------
 
-You can download Zope 3.1.0 or later for your major works.
-Install Zope3 as root, though it is not necessary.  When you
-experiment  with Zope3, make instance as a normal user.  For production
-systems, you get the additional advantage of OS level security.
-Since we manually installed Zope3 (as root), the default installation
-path will be /usr/local/Zope-3.1.x .  When making zope instance,
-you have to specify zope manager's user name and password.
-You can make more instances, if required.
+You can download Zope 3.1.0 or later for your major works.  Install
+Zope3 as root, though it is not necessary.  When you experiment with
+Zope3, make instance as a normal user.  For production systems, you
+get the additional advantage of OS level security.  Since we manually
+installed Zope3 (as root), the default installation path will be
+/usr/local/Zope-3.1.x .  When making zope instance, you have to
+specify zope manager's user name and password.  You can make more
+instances, if required.
 
 In your Zope 3 instance directory, there are few directories with
 specific purposes.  Here ownwards I will be using $ZOPE3INSTANCE to
@@ -599,63 +611,72 @@ When we started discussing BookMarker, the first word I emphasized is
 Extreme Programming (XP).  I strongly recommend you to read about
 Extreme Programming.  It will really influence you to write code in
 Zope3 way (directly and indirectly).  Ok, one causion: many XPers
-believe that frameworks are bad.  Here, I can not give an answer
-in one sentence, so you find out yourself.  "Extreme Programming
+believe that frameworks are bad.  Here, I can not give an answer in
+one sentence, so you find out yourself.  "Extreme Programming
 Explained" by Kent Beck will be a good starting point for your study.
 By the way, another classic book which you can read is "Design
 Patterns" by Gang of Four.  In this book they say : 'Program to an
 interface, not to an implementation'.  To simulate a formal definition
-of interfaces in C++, they used classes with virtual functions.
-Just like this, in Python we will use zope.interface.Interfce
-inherited metaclass for defining an interface.  There is every chance
-for an explicit 'interface' concept in Python language by version 3.0 .
+of interfaces in C++, they used classes with virtual functions.  Just
+like this, in Python we will use zope.interface.Interfce inherited
+metaclass for defining an interface.  There is every chance for an
+explicit 'interface' concept in Python language by version 3.0 .
 According to Extreme Programming: 'The four basic activities of
-development are coding, testing, listening, and designing.'
-Zope3 makes your software testing, a breeze.  You can write unit and
+development are coding, testing, listening, and designing.'  Zope3
+makes your software testing, a breeze.  You can write unit and
 functional tests very easily.
 
 
 Let's look into interfaces
 --------------------------
 
-I hope you are familiar with the concept of interfaces.
-Anyway, when we speak about an interface, we meant it to
-use with reference to an object (i.e, an instance of a class).
-For example if 'A' is a class which implements 'IA', and 'a'
-is an instance of 'A', then 'IA' is the interface of 'a', got it?
-But normally we only deals with the interface and its implementing
-class.
+I hope you are familiar with the concept of interfaces.  Anyway, when
+we speak about an interface, we meant it to use with reference to an
+object (i.e, an instance of a class).  For example if 'A' is a class
+which implements 'IA', and 'a' is an instance of 'A', then 'IA' is the
+interface of 'a', got it?  But normally we only deals with the
+interface and its implementing class.
 
 In our *interfaces.py* we defined three interfaces.  The first
 interface 'IMark' defines a book mark object.  A book mark has two
 attributes, one is the url and another one is the description.  We
 used fields available at zope.schema package to specify these
-attributes.  A schema is an interface with attributes are defined
-using zope.schema fields (there are classes).  So, our `IBookMarker`,
+attributes.  A schema is an interface with attributes defined using
+zope.schema fields (these are classes).  So, our `IBookMarker`,
 `IMark`, and `IMarkContained` are schemas, and not simple interfaces.
 
-As we mentioned earlier `IBookMarker` is a container interface.
-We extended `IContainer` interface with one `name` attribute.
-Also we put one item type pre-condition.  So `IBookMarker` object can
-only contain an `IMark` object.  Now before moving to the next section,
+As we mentioned earlier `IBookMarker` is a container interface.  We
+extended `IContainer` interface with one `name` attribute.  Also we
+put one item type pre-condition.  So `IBookMarker` object can only
+contain an `IMark` object.  Now before moving to the next section,
 please note from which packages and modules we imported different
 classes/interfaces.  Just open the sources of those packages, and see
 how well documented they are!.  Some documentation are written in
-seperate ReStructuredText files with unit testing, this is the Zope3
+seperate [Re]StructuredText files with unit testing, this is the Zope3
 way of unit testing.
 
 
 Unit testing re-visited
 -----------------------
 
-We wrote our test in a file named *tests.py*.  You can also write
+We wrote our unit test in a file named *tests.py*.  You can also write
 tests in a package named *tests*.  All test modules under this package
-should have `test_` prefix.  We also automated our doctests written
-along with implementation.  To test our `BookMarker` container, we
-inherited `TestSampleContainer`.  For testing containers, you can
-stick with `unittest` module.  Also use it where you want more reusablity.
-Anyway, we will integrate all doctests with `unittest` module.  This
-will help us to run tests automatically, from a single point.
+should have `test_` prefix.  Supporting modules should not start with
+that prefix.  Now Zope3 test automation script can auto detect all
+your test modules.
+
+To test our `BookMarker` container, we inherited from
+`TestSampleContainer`.  See even test modules are reusable in Zope3!.
+Many tests which we have to write for a container are written in
+`TestSampleContainer`.  So, for testing containers, you can 
+stick with `unittest` module.  Also use it where you want more
+reusablity.
+
+`DocTestSuite` class help us to integrate all doctests with `unittest`
+module.  This will enable us to run tests automatically, from a single
+point.  Sometimes you have to write more codes for testing than real
+implementation.  Gradually this will make your development fast.
+Otherwise there is something wrong with your development process.
 
 
 Let's talk about implementations
@@ -675,7 +696,7 @@ Similarly `Contained` is an implementation of `IContained`.  `Mark`
 class implements both `IMark` and `IMarkContained`.  `IMarkContained`
 is an extended interface of `IContained`.  So by inheriting
 `Contained` class we get a partial implementation of our interfaces.
-Now the remaining things to implement is two attributes, url and
+Now the remaining things to implement are two attributes, url and
 description.  Similarly majority of `IBookMarker` is implemented in
 `BTreeContainer`.  I hope documentation strings are self explanatory.
 
@@ -688,14 +709,14 @@ Do you think a Programming language should be used to write
 configuration files?  If yes, why?.  Why we can not use a text file
 with some conventions or markups.
 
-Anyway, ZCML is the XML based configuration system for Zope3.
-The base tag 'configure' specifies namespaces to use.  In our
-configuration we used two namespaces, 'zope' and 'browser'.
-'zope' namespace contains the basic elements required to register our
-content objects.  'browser' is for view related configuration.
+Anyway, ZCML is the XML based configuration system for Zope3.  The
+base tag 'configure' specifies namespaces to use.  In our
+configuration we used two namespaces, 'zope' and 'browser'.  'zope'
+namespace contains the basic elements required to register our content
+objects.  'browser' is for view related configuration.
 
 The first tag we used is 'interface'.  It is called a directive.  In
-our configuration 'iterface' is a simple directive and 'content' is a
+our configuration 'interface' is a simple directive and 'content' is a
 complex directive.
 
 
@@ -705,10 +726,10 @@ Views and ZPT
 Your objects are finally saved in ZODB, you may choose other storage
 mechanisms also.  In zope you can present your objects in different
 ways.  I mean, through different protocols like http, ftp, xmlrpc etc.
-In our case, we created a view for browser (yes, through http).
-We put all logics for presentation in *browser.py*.  And created a
-Zope Page Template (ZPT) for real presentation.  Normally you should
-avoid any information retrieval logic in ZPT.
+In our case, we created a view for browser (yes, through http).  We
+put all logics for presentation in *browser.py*.  And created a Zope
+Page Template (ZPT) for real presentation.  Normally you should avoid
+any information retrieval logic in ZPT.
 
 
 The things we didn't mentioned
@@ -728,16 +749,16 @@ technologies.  And ofcourse, willing to spend time :)
 
 While installation you might get error due to Python development
 libraries not installed.  If you know Python and system administration
-you will just run: apt-get install python-dev
-Similary you have created __init__.py file to make our package working.
+you will just run: apt-get install python-dev Similary you have
+created __init__.py file to make our package working.
 
 If you are interested in Zope3 by now, surely you will explore more in
 future.  While you exploring, you will see that doctests can be
 written in stand alone text files.  Similarly you will understand lots
 of other things.
 
-One thing I can assure you is that zope is really a matured
-framework.  It has almost 9 year history of successfull running.  Many
+One thing I can assure you is that zope is really a matured framework.
+It has almost 9 year history of successfull running.  Many
 technologies evolved through zope.  Infact zope and zope developers
 has influenced Python language itself.  Yes! it is one of the gratest
 Python application ever written.
@@ -753,15 +774,14 @@ your journey through Zope3 world.  So, good luck.
 About the author
 ----------------
 
-I am a Python programmer from `Kerala`_.  I love Python.
-Previously I have worked for Malayalam i18n & l10n in free softwares.
-I have worked for Free Software Foundation of India (as a job).
-I was a `Koha`_ consultant for some time.
-Currently I am doing lots of Python, PyGTK and PostgreSQL (about one
-and half years).  I am a proud GNU Emacs user.
+I am a Python programmer from `Kerala`_.  I love Python.  Previously I
+have worked for Malayalam i18n & l10n in free softwares.  I have
+worked for Free Software Foundation of India (as a job).  I was a
+`Koha`_ consultant for some time.  Currently I am doing lots of
+Python, PyGTK and PostgreSQL (about one and half years).  I am a proud
+GNU Emacs user.
 
 .. _Kerala: http://en.wikipedia.org/wiki/Kerala
 .. _Koha: http://www.kohadocs.org/CDS_ISIS_to_Koha.html
 
 $Id$
-
