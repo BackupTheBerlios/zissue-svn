@@ -1,0 +1,29 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><title>Search Results</title></head>
+<body>
+<p>
+<form action="zissuesearch.html" method="get">
+  <input type="text" name="searchText" value=""
+    tal:attributes="value request/searchText|nothing" />
+      <input type="submit" value="Search" />
+</form>
+</p>
+
+<h3>Search Results</h3>
+ <div tal:condition="request/searchText|nothing" tal:omit-tag="">
+        <div tal:define="result view/searchSimpleText" tal:omit-tag="">
+          <div tal:condition="not:result/total">
+            No result found.
+          </div>
+
+          <div tal:condition="result/total">
+            <div tal:repeat="name result/results">
+               <a href="location"
+                  tal:attributes="href name"
+                  tal:content="name">out put</a>
+            </div>
+          </div>
+    </div>
+  </div>
+</body>
+</html>

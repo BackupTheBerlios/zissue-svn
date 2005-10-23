@@ -1,0 +1,37 @@
+<!-- ZissueTracker main page template -->
+<!-- <html metal:use-macro="views/standard_macros/view"> -->
+<html
+  xmlns="http://www.w3.org/1999/xhtml">
+<head><title tal:content="view/name"></title></head>
+
+  <body>
+<!-- <div metal:fill-slot="body"> -->
+
+<!-- <div class="row">
+-->
+
+  <h1 tal:content="view/name" align="center">MyZissueTracker</h1>
+  <p tal:replace="view/description">My Zissue Tracker</p>
+  <br/>
+  <br/>
+
+<form action="zissuesearch.html" method="get">
+  <input type="text" name="searchText" value=""
+    tal:attributes="value request/searchText|nothing" />
+      <input type="submit" value="Search" />
+</form>
+
+<p>
+<a href="newbug.html">New Zissue</a>
+</p>
+
+<!-- <div tal:replace="structure view/additional"/>
+-->
+<!--
+      </div>
+-->
+
+<!-- </div>
+-->
+  </body>
+</html>

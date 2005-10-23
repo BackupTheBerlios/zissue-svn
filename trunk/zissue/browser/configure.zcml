@@ -239,6 +239,30 @@
       />
 
    <page
+      name="ZissueTrackerMain.html"
+      for="zissue.interfaces.IZissueTracker"
+      class=".zissuetrackermain.ZissueTrackerMain"
+      template="zissuetrackermain.pt"
+      permission="zope.Public"
+      menu="zmi_views"
+      title="Preview"
+      />
+
+   <defaultView
+      for="zissue.interfaces.IZissue"
+      name="ZissueTrackerMain.html"
+      />
+
+  <page
+      name="zissuesearch.html" 
+      for="zissue.interfaces.IZissueTracker"
+      class=".zissuesearch.ZissueSearch"
+      template="zissuesearch.pt"
+      permission="zope.Public"
+      menu="zmi_views"
+      title="Search" />
+
+   <page
       name="ZissueDetails.html"
       for="zissue.interfaces.IZissue"
       class=".zissuedetails.ZissueDetails"
