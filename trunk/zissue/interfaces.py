@@ -41,7 +41,7 @@ class IComment(INote):
 
 #class IPatchFile(INote, IFile):
 class IPatchFile(INote):
-    """PatchFile is container see below."""
+    """PatchFile is a container see below."""
     #FIXME: How to make use IFile, use as adapter? or extend?
     pass
 

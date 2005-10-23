@@ -21,4 +21,4 @@ class ZissueDetails:
                 children.append(info)
         return children
 
-    additional = ViewPageTemplateFile('additional.pt')
+    additional = ViewPageTemplateFile('zissuedetailsadditional.pt')

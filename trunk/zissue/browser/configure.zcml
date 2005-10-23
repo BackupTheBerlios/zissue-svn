@@ -239,10 +239,10 @@
       />
 
    <page
-      name="zissues.html"
+      name="ZissueDetails.html"
       for="zissue.interfaces.IZissue"
-      class=".zissues.ZissueDetails"
-      template="zissues.pt"
+      class=".zissuedetails.ZissueDetails"
+      template="zissuedetails.pt"
       permission="zope.Public"
       menu="zmi_views"
       title="Thread"
@@ -250,23 +250,14 @@
 
    <defaultView
       for="zissue.interfaces.IZissue"
-      name="zissues.html"
+      name="ZissueDetails.html"
       />
-<!--
+
    <page
-      name="additional.html"
-      for="zissue.interfaces.IZissue"
-      class=".zissues.Thread"
-      template="zissues.pt"
-      permission="zope.View"
-      menu="zmi_views" title="Thread"
-      />
--->
-   <page
-      name="comments.html"
+      name="CommentDetails.html"
       for="zissue.interfaces.IComment"
-      class=".comment.CommentDetails"
-      template="comments.pt"
+      class=".commentdetails.CommentDetails"
+      template="commentdetails.pt"
       permission="zope.Public"
       menu="zmi_views"
       title="Preview"
@@ -274,7 +265,7 @@
 
    <defaultView
       for="zissue.interfaces.IComment"
-      name="comments.html"
+      name="CommentDetails.html"
       />
 
 </configure>
