@@ -19,7 +19,7 @@ Zope3 FAQ
 Introduction
 ------------
 
-This is an unofficial FAQ of Zope3, which is mostly collected from 
+This is an unofficial FAQ of Zope3, which is mostly collected from
 zope3-users mailing list and Zope3 blogs by developers and users.
 
 
@@ -127,6 +127,16 @@ Services and Utilities
 
 Security and Principal
 ----------------------
+
+
+Zope3 and Relational Database
+-----------------------------
+
+Which psycopg works with Zope3?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Psycopg v2.0 is not supported for now since it is still beta.
+ZopeX3.0 and Zope3.1 works with Psycopg v1.0.
 
 
 Zope3 on GNU/Linux , `*BSD` and Solaris
