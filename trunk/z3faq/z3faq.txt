@@ -114,7 +114,7 @@ Now use `validateInvariants` method of the interface to validate::
 
   buddy = Buddy()
   buddy.email = u"user.id@some.address.com"
-  IRange.validateInvariants(buddy)
+  IBuddy.validateInvariants(buddy)
 
 
 ZCML
