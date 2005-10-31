@@ -54,14 +54,15 @@ Is Zope 3 stable enough to be used in production enviroment?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Zope 3 is used in several larger production sites already.  Public
-applications include `Launchpad`_, `SchoolTool`_ and `Tiks`_. But
-there are several custom solutions written too.  But the development
-of Zope 3 will probably never be done, it will continue untill our all
-needs meets :) 
+applications include `Launchpad`_, `SchoolTool`_, `Tiks`_  and
+`SIP`_.  But there are several custom solutions written too.  But the
+development of Zope 3 will probably never be done, it will continue
+untill our all needs meets :) 
 
 .. _Launchpad: http://www.launchpad.net
 .. _SchoolTool: http://www.schooltool.org
 .. _Tiks: http://www.tiks.org/
+.. _SIP: http://sourceforge.net/projects/sampleinventory
 
 
 Folklore
@@ -80,6 +81,40 @@ Component Architecture
 
 Interfaces and Adapters
 -----------------------
+
+How to validate two or more fields simultaneously?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Use `invariants` to control more fields. 
+
+Look at zope.interface/README.txt for details.
+
+Let's consider this more specific question asked to list:
+
+  How do I implement a validation rule that says either email or phone
+  have to exist, but not necissarily both.
+
+  Using the buddy demo as an example, with the following interface::
+
+    class IBuddy(zope.interface.Interface):
+        """Provides access to basic buddy information"""
+
+        fullname = TextLine(title=_("Name"))
+        email = TextLine(title=_("Email Address"))
+        phone = TextLine(title=_("Phone Contact"))
+
+First we have to make a callable object, either a simple function or
+callable instance of a class::
+
+  def contacts_invariant(obj):
+      if not (obj.email or obj.phone):
+          raise Exception("At least one contact info is rquired")
+
+Now use `validateInvariants` method of the interface to validate::
+
+  buddy = Buddy()
+  buddy.email = u"user.id@some.address.com"
+  IRange.validateInvariants(buddy)
 
 
 ZCML
