@@ -17,7 +17,7 @@ systems.
 Why 30?
 -------
 
-Sorry! Zope3 cannot be introduced in 10 minutes.
+Sorry! Zope3 cannot be introduced in 10 minutes :) .
 
 
 And why should I ...?
@@ -90,7 +90,7 @@ given the source code of BookMarker here: `boom.tar.bz2`_ .
 
 Our code will be placed at $HOME/myzope/lib/python/boom
 
-First create a file *interfaces.py* where we will keep our
+First create a file named *interfaces.py* where we will keep our
 interfaces. Later we will implement these interfaces one by one, with
 strong support of unit testing.
 
@@ -184,7 +184,7 @@ Now create *tests.py* and put the following code there::
       unittest.main(defaultTest='test_suite') 
 
 Actually, we are not written any unit tests here, but this will make
-our doc tests working automatically.
+our doc tests running automatically.
 
 To run the unit test::
 
@@ -579,7 +579,7 @@ instances, if required.
 
 In your Zope 3 instance directory, there are few directories with
 specific purposes.  Here ownwards I will be using $ZOPE3INSTANCE to
-refer your instance directory
+refer your instance directory.
 
 $ZOPE3INSTANCE/etc
   In 'etc' you can see some configuration files.
@@ -617,8 +617,8 @@ Explained" by Kent Beck will be a good starting point for your study.
 By the way, another classic book which you can read is "Design
 Patterns" by Gang of Four.  In this book they say : 'Program to an
 interface, not to an implementation'.  To simulate a formal definition
-of interfaces in C++, they used classes with virtual functions.  Just
-like this, in Python we will use zope.interface.Interfce inherited
+of interfaces in C++, they used classes with virtual functions.  In a
+similar fashion, we will use zope.interface.Interfce inherited
 metaclass for defining an interface.  There is every chance for an
 explicit 'interface' concept in Python language by version 3.0 .
 According to Extreme Programming: 'The four basic activities of
