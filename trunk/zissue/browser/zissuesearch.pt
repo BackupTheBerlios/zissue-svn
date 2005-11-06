@@ -17,10 +17,10 @@
           </div>
 
           <div tal:condition="result/total">
-            <div tal:repeat="name result/results">
+            <div tal:repeat="item result/results">
                <a href="location"
-                  tal:attributes="href name"
-                  tal:content="name">out put</a>
+                  tal:attributes="href item/url"
+                  tal:content="item/name">out put</a>
             </div>
           </div>
     </div>
