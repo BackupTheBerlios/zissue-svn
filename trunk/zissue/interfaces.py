@@ -24,13 +24,14 @@ from zope.app.container.constraints import ContainerTypesConstraint
 from zope.app.container.constraints import ItemTypePrecondition
 from zope.app.container.interfaces import IContained, IContainer
 from zope.app.file.interfaces import IFile
+from zissue import ZissueMessageID as _
 
 class INote(Interface):
     """Base interface for a comment/reply."""
 
     note = Text(
-        title=u"Additional comment/reply.",
-        description=u"Comment/reply by user/programmer.",
+        title=_(u"Additional comment/reply."),
+        description=_(u"Comment/reply by user/programmer."),
         default=u"",
         required=False)
 
@@ -55,8 +56,8 @@ class IZissue(IContainer):
     __setitem__.precondition = ItemTypePrecondition(IComment, IPatchFile)
 
     summary = TextLine(
-        title=u"Summary/Subject",
-        description=u"Summary and/or subject of the zissue.",
+        title=_(u"Summary/Subject"),
+        description=_(u"Summary and/or subject of the zissue."),
         default=u"",
         required=True)
 
@@ -69,28 +70,28 @@ class IComponent(IContainer):
     __setitem__.precondition = ItemTypePrecondition(IZissue)
 
     name = TextLine(
-        title=u"Name of Component",
-        description=u"Name of Component.",
+        title=_(u"Name of Component"),
+        description=_(u"Name of Component."),
         default=u"",
         required=True)
 
     description = Text(
-        title=u"Description",
-        description=u"A detailed description of the component.",
+        title=_(u"Description"),
+        description=_(u"A detailed description of the component."),
         default=u"",
         required=False)
 
 class IProduct(IContainer):
 
     name = TextLine(
-        title=u"Name of Product",
-        description=u"Name of Product.",
+        title=_(u"Name of Product"),
+        description=_(u"Name of Product."),
         default=u"",
         required=True)
 
     description = Text(
-        title=u"Description",
-        description=u"A detailed description of the product.",
+        title=_(u"Description"),
+        description=_(u"A detailed description of the product."),
         default=u"",
         required=False)
 
@@ -114,14 +115,14 @@ class IMainProduct(IProduct):
 class IZissueTracker(IContainer):
 
     name = TextLine(
-        title=u"Name of Zissue Tracker",
-        description=u"Name of Zissue Tracker.",
+        title=_(u"Name of Zissue Tracker"),
+        description=_(u"Name of Zissue Tracker."),
         default=u"",
         required=True)
 
     description = Text(
-        title=u"Description",
-        description=u"A detailed description of the Zissue Tracker.",
+        title=_(u"Description"),
+        description=_(u"A detailed description of the Zissue Tracker."),
         default=u"",
         required=False)
 

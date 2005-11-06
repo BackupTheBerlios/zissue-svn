@@ -1,5 +1,6 @@
 <configure
-    xmlns='http://namespaces.zope.org/zope'>
+    xmlns='http://namespaces.zope.org/zope'
+    i18n_domain="zissue">
 
   <interface
       interface=".interfaces.IZissueTracker"
@@ -185,6 +186,12 @@
     <require
         permission="zope.ManageContent"
         set_schema=".interfaces.IPatchFile"
+        />
+  </content>
+
+  <content class="zope.app.file.file.File">
+    <implements 
+        interface="zissue.interfaces.IPatchFile"
         />
   </content>
 
