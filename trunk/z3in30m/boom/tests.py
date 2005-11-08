@@ -23,7 +23,7 @@ from zope.testing.doctestunit import DocTestSuite
 
 from zope.app.container.tests.test_icontainer import TestSampleContainer
 
-from boom.bookmarker import BookMarker, Mark
+from boom.bookmarker import BookMarker
 
 
 class BookMarkerContainerTest(TestSampleContainer):

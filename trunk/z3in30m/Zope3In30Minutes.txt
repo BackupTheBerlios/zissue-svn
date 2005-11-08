@@ -2,7 +2,7 @@ Zope3 In 30 Minutes
 ===================
 
 :Author: Baiju M <baiju.m.mail AT gmail.com>
-:Version: 0.1.93
+:Version: 0.1.94
 :Copyright: (C) 2005 Baiju M, Placed under GNU GPL version 2,
              or (at your option) any later version
 :Source: http://svn.berlios.de/viewcvs/zissue/trunk/z3in30m
@@ -17,7 +17,7 @@ systems.
 Why 30?
 -------
 
-Sorry! Zope3 cannot be introduced in 10 minutes :) .
+Sorry! Zope3 cannot be introduced in 10 minutes :)
 
 
 And why should I ...?
@@ -25,7 +25,7 @@ And why should I ...?
 
 If you are looking for a Pythonic framework for web application
 development, just continue reading.  And I am *not* going to make a
-new definition for *What is Pythonic?* :) .  Here I will try to answer
+new definition for *What is Pythonic?* :)  Here I will try to answer
 your "why?" questions.
 
 
@@ -166,7 +166,7 @@ Now create *tests.py* and put the following code there::
 
   from zope.app.container.tests.test_icontainer import TestSampleContainer
 
-  from boom.bookmarker import BookMarker, Mark
+  from boom.bookmarker import BookMarker
 
 
   class BookMarkerContainerTest(TestSampleContainer):
@@ -611,7 +611,7 @@ When we started discussing BookMarker, the first word I emphasized is
 Extreme Programming (XP).  I strongly recommend you to read about
 Extreme Programming.  It will really influence you to write code in
 Zope3 way (directly and indirectly).  Ok, one causion: many XPers
-believe that frameworks are bad.  Here, I can not give an answer in
+believe that frameworks are bad.  Here, I cannot give an answer in
 one sentence, so you find out yourself.  "Extreme Programming
 Explained" by Kent Beck will be a good starting point for your study.
 By the way, another classic book which you can read is "Design
@@ -706,7 +706,7 @@ ZCML Explained
 
 Let me ask one question, which you are going to face many times later.
 Do you think a Programming language should be used to write
-configuration files?  If yes, why?.  Why we can not use a text file
+configuration files?  If yes, why?.  Why we cannot use a text file
 with some conventions or markups.
 
 Anyway, ZCML is the XML based configuration system for Zope3.  The
@@ -729,13 +729,14 @@ ways.  I mean, through different protocols like http, ftp, xmlrpc etc.
 In our case, we created a view for browser (yes, through http).  We
 put all logics for presentation in *browser.py*.  And created a Zope
 Page Template (ZPT) for real presentation.  Normally you should avoid
-any information retrieval logic in ZPT.
+writing any information retrieval logic in ZPT.  In ZCML we have
+written `browser:page` directive to support the views.
 
 
 The things we didn't mentioned
 ------------------------------
 
-Please go to the last section, otherwise you can not finish this
+Please go to the last section, otherwise you cannot finish this
 article in 30 minutes :)
 
 Ofcourse, in an introductory document we can only cover a fraction of
