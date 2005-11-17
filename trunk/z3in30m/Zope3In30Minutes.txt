@@ -9,6 +9,7 @@ Zope3 In 30 Minutes
 :Source: http://svn.berlios.de/viewcvs/zissue/trunk/z3in30m
 
 .. contents::
+.. sectnum::
 
 
 *Important Note*: I assume you are using Debian 3.1 (Sarge) or similar
