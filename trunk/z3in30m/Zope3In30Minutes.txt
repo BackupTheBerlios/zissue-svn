@@ -12,8 +12,9 @@ Zope3 In 30 Minutes
 .. sectnum::
 
 
-*Important Note*: I assume you are using Debian 3.1 (Sarge) or similar
-systems. 
+.. Note::
+
+  I assume you are using Debian 3.1 (Sarge) or similar systems.
 
 
 Quick Start
