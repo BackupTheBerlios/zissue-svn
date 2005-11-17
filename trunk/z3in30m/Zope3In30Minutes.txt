@@ -802,8 +802,8 @@ GNU Emacs user.
 Appendix
 ********
 
-Our time is over :)  So this section is not an essential part of this
-article.  This section is for curious readers, who cannot jumb to
+Our time is over :)  And this section is not an essential part of this
+article.  This section is for curious readers, who cannot jump to
 other places at the moment.
 
 
@@ -813,23 +813,84 @@ Define few words
 ZODB
   Zope Object Database, Zope primarily use this object (oriented)
   database for storing all objects (data).  Other storages like RDBMS
-  of external file systems can also be used with Zope.
+  or external file systems can also be used with Zope.
+
+Component
+  Zope use a component architecture for developing applications.
+  Zope3 Offcial site says like this:
+
+    A component is defined as an "object with introspectable interfaces".
+    Specifically, we define a component to be an object that asserts
+    interfaces using the ZopeInterfaces.  
 
 
 Where to look next
 ------------------
 
-Zope3 hase two books available in print.
+Zope3 hase two books available in print, the links are given above.
+But I think still there is no Indian edition available, so I didn't
+yet bought them :)
+
+`Zope3 book by Stephan Ritcher`_ is available online.
+
+IRC : #zope3-dev at irc.freenode.net
+
+`Zope3 development site`_ has lots of documents
+
+`zope3-users`_ mailing list
+
+`Plane Zope`_ 
+
+.. _Zope3 book by Stephan Ritcher: http://dev.zope.org/Zope3/Zope3Book
+.. _Zope3 development site: http://dev.zope.org/Zope3
+.. _zope3-users: http://mail.zope.org/mailman/listinfo/zope3-users
+.. _Plane Zope: http://planetzope.org
 
 
-Question and Answers
---------------------
+Questions and Answers
+---------------------
+
+Here I will try to answer few questions which is very likely to arise
+in your mind while reading this article.  If your simple question is
+not answered here please send it to : baiju.m.mail AT gmail.com
 
 
 Why this article?
 ~~~~~~~~~~~~~~~~~
 
-To summarize my understanding of Zope3 and help new commers.
+Initially it was to summarize my understanding of Zope3 and now I am
+maintaining this for newcomers.
+
+
+Did you said something about functional testing?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Infact I want let you know that there is fuctional testing existing,
+thats all.  In 3.2 onwards we will be using docttest for fuctional
+testing.  You can read more about it from `here`_. A standalone
+version is also `available`_ .
+
+.. _here: http://svn.zope.org/*checkout*/Zope3/trunk/src/zope/testbrowser/README.txt
+.. _available: http://www.zope.org/Members/benji_york/ZopeTestbrowser-0.9.0.tgz
+
+
+I think you wrote more lines for configuration than other parts?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you survived after that, then surely you will become a great Zope3
+programmer :)
+
+
+Oh! lots of Python web frameworks, I am totally confused?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Anyway here I am not going to compare Zope3 with any other frameworks.
+But I think `Python Web Server Gateway Interface`_ gives a real hope
+for lots reusability.  Most of the Python web frameworks trying to
+adhere to WSGI specification.  Infact many components of Zope3 can be
+used outside Zope3 (eg:- zope.interface, zope.testbrowser)
+
+.. _Python Web Server Gateway Interface: http://www.python.org/peps/pep-0333.html  
 
 
 $Id$
