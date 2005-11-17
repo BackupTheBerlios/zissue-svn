@@ -827,19 +827,21 @@ Component
 Where to look next
 ------------------
 
-Zope3 hase two books available in print, the links are given above.
+Zope3 has two books available in print, the links are given above.
 But I think still there is no Indian edition available, so I didn't
 yet bought them :)
 
 `Zope3 book by Stephan Ritcher`_ is available online.
 
-IRC : #zope3-dev at irc.freenode.net
+Zope3 IRC channel #zope3-dev is at irc.freenode.net
 
-`Zope3 development site`_ has lots of documents
+And remember `Zope3 development site`_ has lots of documents.
 
-`zope3-users`_ mailing list
+`zope3-users`_ mailing list is the first place to ask any questions
+related to Zope3.  But before asking any question please go through
+online documentations.
 
-`Plane Zope`_ 
+You can read other Zope developers/users blog entries from `Plane Zope`_.
 
 .. _Zope3 book by Stephan Ritcher: http://dev.zope.org/Zope3/Zope3Book
 .. _Zope3 development site: http://dev.zope.org/Zope3
@@ -884,10 +886,10 @@ programmer :)
 Oh! lots of Python web frameworks, I am totally confused?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Anyway here I am not going to compare Zope3 with any other frameworks.
-But I think `Python Web Server Gateway Interface`_ gives a real hope
-for lots reusability.  Most of the Python web frameworks trying to
-adhere to WSGI specification.  Infact many components of Zope3 can be
+Here I am not going to compare Zope3 with any other frameworks.  But I
+think `Python Web Server Gateway Interface`_ (WSGI) gives a real hope
+for lots of reusability.  Most of the Python web frameworks are trying
+to adhere to WSGI specification.  Infact many components of Zope3 can be
 used outside Zope3 (eg:- zope.interface, zope.testbrowser)
 
 .. _Python Web Server Gateway Interface: http://www.python.org/peps/pep-0333.html  
