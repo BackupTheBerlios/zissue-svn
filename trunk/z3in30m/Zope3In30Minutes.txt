@@ -897,4 +897,31 @@ used outside Zope3 (eg:- zope.interface, zope.testbrowser)
 .. _Python Web Server Gateway Interface: http://www.python.org/peps/pep-0333.html  
 
 
+Is 'tests.py' and 'ftests.py' file names mandatory?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Yes, for a simple package like `BookMarker`, you can use simple file
+based modules.  If the file names are given like that, Zope3 testing
+script will autodetect your testing modules.  For big packages use
+'test' and 'ftests' sub-packages to place your test modules.  All
+those test modules should start with `test_` prefix. 
+
+.. Note::
+
+  According to Zope3 naming convention all module/package names should
+  be in lower cases, and should not contain underscore in between. But
+  test module names are one excpetion.
+
+
+What will be the final file structure of 'boom'?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Here it is::
+
+  $ pwd
+  /home/baiju/myzope/lib/python/zissue
+  $ ls
+  bookmarker.py        browser.py      ftests.py    interfaces.py  README
+  boom-configure.zcml  configure.zcml  __init__.py  marks.pt       tests.py
+
 $Id$
