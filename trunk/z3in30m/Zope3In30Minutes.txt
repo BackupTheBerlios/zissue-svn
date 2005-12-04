@@ -3,7 +3,7 @@ Zope3 In 30 Minutes
 ===================
 
 :Author: Baiju M <baiju.m.mail AT gmail.com>
-:Version: 0.1.95
+:Version: 0.1.96
 :Copyright: (C) 2005 Baiju M, Placed under GNU GPL version 2,
              or (at your option) any later version
 :Source: http://svn.berlios.de/viewcvs/zissue/trunk/z3in30m
@@ -38,8 +38,8 @@ your "why?" questions.
 Keywords
 --------
 
-Python, Zope, Interface, Component, ZCML, ZMI, Adapter, View, Event,
-Service, Utility, Principal, ZODB, ZEO.
+Python, Zope, Interface, Component, ZCML, ZMI, Adapter, View, ZPT,
+Event, Utility, Principal, ZODB, ZEO.
 
 
 So let's start ...
@@ -64,7 +64,7 @@ To start Zope3 server, go to your instance directory, then::
   $ cd ~/myzope
   $ ./bin/runzope
 
-If you get a port error, check check whether 8080 and 8021 is already
+If you get a port error, check whether 8080 and 8021 is already
 used by other programs; for the time being, just stop it.  Start your
 browser, the open http://localhost:8080 .  What you see is the Zope
 Management Interface (ZMI).  ZMI is your Python prompt, hmm... no!
@@ -397,6 +397,7 @@ Now configuration (save in configure.zcml)::
       menu="zmi_views" title="Edit" 
       />
 
+  <!--
   <browser:page
       name="marks.html"
       for="boom.interfaces.IBookMarker"
@@ -406,6 +407,7 @@ Now configuration (save in configure.zcml)::
       menu="zmi_views"
       title="Marks"
       />
+  -->
 
   </configure>
 
@@ -485,7 +487,8 @@ Then one template (marks.pt)::
       </div>
     </body>
   </html>
- 
+
+Uncomment the last directive 'browser:page' in our configuartion.
 Now by clicking on "Marks" tab you can see all book marks.
 
 Ok! this is not the end, just the beginning of your study.
@@ -864,6 +867,17 @@ Why this article?
 
 Initially it was to summarize my understanding of Zope3 and now I am
 maintaining this for newcomers.
+
+
+How did you created this tutorial?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+I am using `ReStructuredText`_ to write this document. To create HTML, just 
+copied three files in `Zope3/doc/style/` to current folder, then::
+
+  $ rest2html --stylesheet=rest.css Zope3In30Minutes.txt > Zope3In30Minutes.html
+
+.. _ReStructuredText: http://docutils.sourceforge.net/rst.html
 
 
 Did you said something about functional testing?
