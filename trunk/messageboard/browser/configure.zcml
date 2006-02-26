@@ -1,0 +1,53 @@
+<configure
+    xmlns="http://namespaces.zope.org/browser"
+    xmlns:zope="http://namespaces.zope.org/zope">
+
+  <page
+      name="MessageBoardMain.html"
+      for="messageboard.interfaces.IMessageBoard"
+      template="messageboardmain.pt"
+      permission="zope.Public"
+      menu="zmi_views"
+      title="Preview"
+      />
+
+  <defaultView
+      for="messageboard.interfaces.IMessageBoard"
+      name="MessageBoardMain.html"
+      />
+
+  <zope:adapter
+      factory=".messageboardform.messageboard_page_template"
+      name="messageboard"
+      />
+
+  <page
+      name="AddMessageBoard.html"
+      class=".messageboardform.AddMessageBoard"
+      template="messageboardform.pt"
+      permission="zope.ManageContent"
+      for="zope.app.container.interfaces.IAdding"
+      />
+
+  <addMenuItem
+      class="messageboard.messageboard.MessageBoard"
+      title="Message Board"
+      description="A Message Board"
+      permission="zope.ManageContent"
+      view="AddMessageBoard.html" 
+      />
+
+  <zope:adapter
+      factory=".messageform.message_page_template"
+      name="message"
+      />
+
+  <page
+      name="AddMessage.html"
+      class=".messageform.AddMessage"
+      template="messageform.pt"
+      permission="zope.ManageContent"
+      for="zope.app.container.interfaces.IAdding"
+      />
+
+</configure>

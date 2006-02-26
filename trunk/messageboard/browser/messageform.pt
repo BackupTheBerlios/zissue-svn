@@ -1,0 +1,19 @@
+<html>
+<body>
+
+  <form action="." tal:attributes="action request/URL">
+
+    <div tal:repeat="widget view/widgets">
+      <b tal:content="widget/label" i18n:translate="">label</b>
+      <div tal:content="structure widget"></div>
+    </div>
+
+    <input
+        tal:repeat="action view/actions"
+        tal:replace="structure action/render"
+    />
+
+  </form>
+
+</body>
+</html>
