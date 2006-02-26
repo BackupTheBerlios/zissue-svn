@@ -1,0 +1,51 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope">
+
+  <interface 
+      interface=".interfaces.ICollector" 
+      type="zope.app.content.interfaces.IContentType"
+      /> 
+
+  <content class=".ticketcollector.Collector">
+    <implements
+        interface="zope.app.annotation.interfaces.IAttributeAnnotatable"
+        />
+    <implements
+        interface="zope.app.container.interfaces.IContentContainer" 
+        />
+    <require
+        permission="zope.ManageContent"
+        interface=".interfaces.ICollector"
+        />
+    <require
+        permission="zope.ManageContent"
+        set_schema=".interfaces.ICollector"
+        />
+  </content>
+
+  <interface 
+      interface=".interfaces.ITicket" 
+      type="zope.app.content.interfaces.IContentType"
+      /> 
+
+  <content class=".ticket.Ticket">
+    <implements
+        interface="zope.app.annotation.interfaces.IAttributeAnnotatable"
+        />
+    <require
+        permission="zope.ManageContent"
+        set_schema=".interfaces.ITicket"
+        />
+    <require
+        permission="zope.ManageContent"
+        interface=".interfaces.ITicketContainer"
+        />
+    <require
+        permission="zope.ManageContent"
+        interface=".interfaces.ITicket"
+        />
+  </content>
+
+  <include package=".browser" />
+
+</configure>
