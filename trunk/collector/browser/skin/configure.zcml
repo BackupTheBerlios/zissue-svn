@@ -1,0 +1,18 @@
+<configure
+    xmlns="http://namespaces.zope.org/browser">
+
+  <layer name="tuto"/>
+
+  <skin name="tuto" layers="tuto rotterdam default"/>
+
+  <resource name="tuto.css" file="tuto.css" layer="tuto"/>
+
+  <page
+      for="*"
+      name="view_macros"
+      permission="zope.View"
+      layer="tuto"
+      template="view_macros.pt"
+      />
+
+</configure>
