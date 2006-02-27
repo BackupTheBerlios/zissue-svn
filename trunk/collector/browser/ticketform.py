@@ -17,7 +17,10 @@ class AddTicket(form.AddForm):
         ticket.summary = data['summary']
         ticket.description = data['description']
         return ticket
-
+    
+    def nextURL(self):
+        return "../@@CollectorMain.html"
+    
 ticket_page_template = namedtemplate.NamedTemplateImplementation(
     ViewPageTemplateFile('ticketform.pt'),
     form.interfaces.IPageForm)
