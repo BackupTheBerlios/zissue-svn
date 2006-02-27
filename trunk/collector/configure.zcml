@@ -32,6 +32,9 @@
     <implements
         interface="zope.app.annotation.interfaces.IAttributeAnnotatable"
         />
+    <implements
+        interface="zope.app.container.interfaces.IContentContainer" 
+        />
     <require
         permission="zope.ManageContent"
         set_schema=".interfaces.ITicket"
@@ -43,6 +46,20 @@
     <require
         permission="zope.ManageContent"
         interface=".interfaces.ITicket"
+        />
+  </content>
+
+  <content class=".comment.Comment">
+    <implements
+        interface="zope.app.annotation.interfaces.IAttributeAnnotatable"
+        />
+    <require
+        permission="zope.ManageContent"
+        set_schema=".interfaces.IComment"
+        />
+    <require
+        permission="zope.ManageContent"
+        interface=".interfaces.IComment"
         />
   </content>
 
