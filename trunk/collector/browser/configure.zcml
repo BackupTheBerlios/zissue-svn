@@ -69,6 +69,26 @@
       for="zope.app.container.interfaces.IAdding"
       />
 
+  <page
+      name="TicketMain.html"
+      for="collector.interfaces.ITicket"
+      class=".ticketmain.TicketMain"
+      template="ticketmain.pt"
+      permission="zope.Public"
+      menu="zmi_views"
+      title="Preview"
+      />
+
+  <defaultView
+      for="collector.interfaces.ITicket"
+      name="AddComment.html"
+      />
+
+  <zope:adapter
+      factory=".ticketmain.ticket_page_template"
+      name="ticketmain"
+      />
+
   <include package=".skin" />
 
 </configure>

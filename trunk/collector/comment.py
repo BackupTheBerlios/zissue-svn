@@ -1,12 +1,10 @@
-import persistent
 from zope.interface import implements
-
 
 from interfaces import IComment
 from interfaces import ICommentContained
 from zope.app.container.contained import Contained
 
-class Comment(persistent.Persistent, Contained):
+class Comment(Contained):
     """A simple implementation of a comment.
 
     Make sure that the ``Comment`` implements the ``IComment`` interface::

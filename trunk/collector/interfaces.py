@@ -5,7 +5,16 @@ from zope.app.container.constraints import ContainerTypesConstraint
 from zope.app.container.constraints import ItemTypePrecondition
 from zope.app.container.interfaces import IContained, IContainer
 
-class ITicket(Interface):
+class IComment(Interface):
+    """Comment for Ticket"""
+
+    body = Text(
+        title=u"Additional Comment",
+        description=u"Body of the Comment.",
+        default=u"",
+        required=True)
+
+class ITicket(IContainer):
     """A ticket object."""
 
     summary = TextLine(
@@ -20,14 +29,11 @@ class ITicket(Interface):
         default=u"",
         required=False)
 
-class IComment(Interface):
-    """Comment for Ticket"""
+    def __setitem__(name, object):
+        """Add an IComment object."""
 
-    body = Text(
-        title=u"Body",
-        description=u"Body of the Comment.",
-        default=u"",
-        required=True)
+    __setitem__.precondition = ItemTypePrecondition(IComment)
+
 
 class ICollector(IContainer):
     """The collector the base object. It can only
@@ -50,17 +56,8 @@ class ITicketContained(IContained):
     tickets."""
 
     __parent__ = Field(
-        constraint = ContainerTypesConstraint(ICollector, ITicket))
+        constraint = ContainerTypesConstraint(ICollector))
 
-
-class ITicketContainer(IContainer):
-    """We also want to make the ticket object a container that can contain
-    comments."""
-
-    def __setitem__(name, object):
-        """Add an IComment object."""
-
-    __setitem__.precondition = ItemTypePrecondition(IComment)
 
 class ICommentContained(IContained):
     """Interface that specifies the type of objects that can contain

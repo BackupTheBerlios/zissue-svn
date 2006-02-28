@@ -41,13 +41,14 @@
         />
     <require
         permission="zope.ManageContent"
-        interface=".interfaces.ITicketContainer"
-        />
-    <require
-        permission="zope.ManageContent"
         interface=".interfaces.ITicket"
         />
   </content>
+
+  <interface 
+      interface=".interfaces.IComment" 
+      type="zope.app.content.interfaces.IContentType"
+      /> 
 
   <content class=".comment.Comment">
     <implements

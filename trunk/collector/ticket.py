@@ -1,11 +1,12 @@
 from zope.interface import implements
 from zope.interface import classProvides
 from zope.app.container.btree import BTreeContainer
+from zope.app.container.contained import Contained
 
 from interfaces import ITicket
-from interfaces import ITicketContained, ITicketContainer
+from interfaces import ITicketContained
 
-class Ticket(BTreeContainer):
+class Ticket(BTreeContainer, Contained):
     """A simple implementation of a ticket.
 
     Make sure that the ``Ticket`` implements the ``ITicket`` interface::
@@ -29,7 +30,7 @@ class Ticket(BTreeContainer):
       u'Ticket Description'
     """
 
-    implements(ITicket, ITicketContained, ITicketContainer)
+    implements(ITicket, ITicketContained)
 
     summary = u''
     description = u''

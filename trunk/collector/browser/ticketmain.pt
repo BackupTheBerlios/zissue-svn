@@ -8,11 +8,13 @@
 
 <div metal:fill-slot="mainbox">
   <h1 i18n:translate="">Collector</h1>
+
   <ol>
-  <span tal:repeat="item view/tickets">
-    <li><a tal:attributes="href item/name" tal:content="string: ${item/summary}">Summary</a></li>
+  <span tal:repeat="item view/comments">
+    <li tal:content="string: ${item/body}">Summary</li>
   </span>
   </ol>
+
 </div>
 </body>
 

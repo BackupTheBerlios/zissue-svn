@@ -13,8 +13,6 @@ class AddComment(form.AddForm):
     template = namedtemplate.NamedTemplate('comment')
 
     def create(self, data):
-        import pdb
-        pdb.set_trace()
         comment = Comment()
         comment.body = data['body']
         return comment
@@ -22,10 +20,25 @@ class AddComment(form.AddForm):
     def nextURL(self):
         return "../../@@CollectorMain.html"
     
-    summary = "Hi summary"
-    description = "Hi description"
-    comments = {}
+    def comments(self):
+        ticket = self.context.__parent__
+        comments = []
+        for name, child in ticket.items():
+            if IComment.providedBy(child):
+                info = {}
+                info['body'] = child.body
+                comments.append(info)
+        return comments
     
+    def summary(self):
+        ticket = self.context.__parent__
+        return ticket.summary
+    
+    def description(self):
+        ticket = self.context.__parent__
+        return ticket.description
+    pass
+
 comment_page_template = namedtemplate.NamedTemplateImplementation(
     ViewPageTemplateFile('commentform.pt'),
     form.interfaces.IPageForm)
