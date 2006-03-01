@@ -20,7 +20,7 @@ class Ticket(BTreeContainer, Contained):
       >>> ticket = Ticket()
       >>> ticket.summary
       u''
-      >>> ticket.summary
+      >>> ticket.description
       u''
       >>> ticket.summary = u'Ticket Summary'
       >>> ticket.description = u'Ticket Description'

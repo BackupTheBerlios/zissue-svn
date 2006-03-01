@@ -15,8 +15,8 @@
       <li metal:define-slot="homelink">
         <a href="../@@CollectorMain.html" i18n:translate="">Home</a>
       </li>
-      <li class="last" metal:define-slot="profitandlosslink">
-        <a href="#" i18n:translate="">Profit And Loss</a>
+      <li class="last" metal:define-slot="addticketlink">
+        <a href="/@@+/AddTicket.html" i18n:translate="">Add Ticket</a>
       </li>
     </div>
     </ul>

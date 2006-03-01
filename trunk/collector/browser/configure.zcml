@@ -18,11 +18,6 @@
       />
 
   <zope:adapter
-      factory=".collectormain.collector_page_template"
-      name="collectormain"
-      />
-
-  <zope:adapter
       factory=".collectorform.collector_page_template"
       name="collector"
       />

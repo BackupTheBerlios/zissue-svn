@@ -1,23 +1,7 @@
-
-from zope.formlib import form
-from zope.formlib import namedtemplate
-from zope.app.pagetemplate import ViewPageTemplateFile
-
-from collector.interfaces import ICollector
 from collector.interfaces import ITicket
-from collector.ticketcollector import Collector
 
-class CollectorMain(form.AddForm):
+class CollectorMain:
 
-    form_fields = form.Fields(ICollector)
-
-    template = namedtemplate.NamedTemplate('collectormain')
-
-    def create(self, data):
-        collector = Collector()
-        collector.description = data['description']
-        return collector
-    
     def tickets(self):
         tickets = []
         for name, child in self.context.items():
@@ -28,7 +12,3 @@ class CollectorMain(form.AddForm):
                 info['name'] = child.__name__ + "/@@+/AddComment.html"
                 tickets.append(info)
         return tickets
-    
-collector_page_template = namedtemplate.NamedTemplateImplementation(
-    ViewPageTemplateFile('collectormain.pt'),
-    form.interfaces.IPageForm)

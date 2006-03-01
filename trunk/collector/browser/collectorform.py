@@ -16,9 +16,7 @@ class AddCollector(form.AddForm):
         collector = Collector()
         collector.description = data['description']
         return collector
-    
-    tickets = [{"summary": "hi"}, {"summary": "ok"}]
-    
+
 collector_page_template = namedtemplate.NamedTemplateImplementation(
     ViewPageTemplateFile('collectorform.pt'),
     form.interfaces.IPageForm)
