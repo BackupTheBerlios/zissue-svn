@@ -1,0 +1,69 @@
+========================
+Zope 3 Tutorial (Part 3)
+========================
+
+Now that we have three content objects (collector, ticket and comment),
+and we have developed a skin.  To make the functionality available to
+the user, In this chapter we will create a nice ticket and coment
+details screen as well as a view for both collector and tickets.
+
+This chapter revolves completely around browser-based view components
+for the MessageBoard and Message classes. Views, which will be mainly
+discussed here, are secondary adapters. They adapt IRequest and some
+context object to some output interface (often just
+zope.interface.Interface). 
+
+There are several ways to write a view. Some of the dominant ones include:
+
+   1. We already learned about using the browser:addform, browser:
+      editform and browser:containerViews directive. These directives
+      are high-level directives and hide a lot of the details about
+      creating and registering appropriate view components.
+
+      Forms can be easily configured via ZCML, as you have done in the
+      previous chapter. Forms are incredibly flexible and allow you
+      any degree of customization. 
+
+   2. There is a browser:page and a browser:pages directive, which are
+      the most common directives for creating browser views and groups
+      of views easily. We will use these two directives for our new
+      views.
+
+   3. The zope:view directive is very low-level and provides
+      functionality for registering multi-views, which the other
+      directives are not capable of doing. However, for the average
+      application developer the need to use this directive might never
+      arise. 
+
+
+Collector Main View
+------------------
+
+Let's now start with the creation of the two new browser views, which
+is the goal of this chapter. While we are able to edit a message
+already, we currently have no view for simply viewing the message,
+which is important, since not many people will have access to the edit
+screen. 
+
+The view displaying the details of a message should contain the
+following data of the message: the title, the author, the creation
+date/time, the parent title (with a link to the message), and the
+body. 
+
+Writing a view usually consists of writing a page template, some
+supporting Python view class and some ZCML to insert the view into the
+system. We are going to start by creating the page template. 
+
+
+Create Page Template
+--------------------
+
+Create a file called details.pt in the browser package of messageboard
+and fill it with the following content: 
+
+
+.. Note::
+
+  Part of this tutorial is taken from Stephan Richter's 'Adding Views'
+  chapter of Zope 3 book.
+  http://dev.zope.org/Zope3/Zope3Book/componentviews.html 

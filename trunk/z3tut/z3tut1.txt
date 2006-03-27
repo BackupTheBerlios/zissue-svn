@@ -1,0 +1,587 @@
+========================
+Zope 3 Tutorial (Part 1)
+========================
+
+
+Introduction
+------------
+
+FIXME: Two or three small paragraphs.
+
+
+Installation
+------------
+
+You will be required to install `Python 2.4.2`_ or later for
+installing Zope 3.  The latest stable release of Zope 3 can be
+downloaded from http://www.zope.org/Products/Zope3 .
+To install Zope 3 in GNU/Linux::
+
+  # tar zxvf Zope-3.2.0.tgz
+  # cd Zope-3.2.0
+  # ./configure --with-python=/path/to/python2.4
+  # make install
+
+I recommend binary setup for win32_, you may go for source
+installation, if required. 
+
+If you cannot install Zope3, see the `detailed instruction`_.
+
+.. _Python 2.4.2: http://www.python.org/ftp/python/2.4.2/Python-2.4.2.tar.bz2
+.. _win32: http://www.zope.org/Products/Zope3/3.2.0final/Zope-3.2.0.win32-py2.4.exe
+.. _detailed instruction: install.html
+
+
+Make an instance
+----------------
+
+Zope 3 uses ``instances`` to contain the information relevant to a
+server (or set of servers).  To create an instance go to installation
+directory and run ``mkzopeinstance`` command, it will ask for few
+values.  It will look like something like this::
+
+  $ cd /usr/local/Zope-3.2.0/bin/
+  $ ./mkzopeinstance
+  Please choose a directory in which you'd like to install Zope
+  'instance home' files such as database files, configuration files,
+  etc.
+
+  Directory: /home/admin/myzope
+
+  Please choose a username for the initial administrator account.
+  This is required to allow Zope's management interface to be used.
+
+  Username: admin
+
+  Please select a password manager which will be used for encode the password of
+  the initial administrator account.
+
+   1. Plain Text
+   2. MD5
+   3. SHA1
+
+  Password Manager Number [1]: 2
+  'MD5' password manager selected
+
+  Please provide a password for the initial administrator account.
+
+  Password: 
+  Verify password: 
+
+After creating the instance go to ``instance home``, then run zope::
+
+  $ cd /home/admin/myzope
+  $ ./bin/runzope
+
+You should see something like this::
+
+  ------
+  2006-03-13T08:20:12 INFO root -- HTTP:localhost:8080 Server started.
+          Hostname: localhost
+          Port: 8080
+  ------
+  2006-03-13T08:20:12 INFO root Startup time: 9.746 sec real, 5.660 sec CPU
+
+If you get a port error, check whether 8080 is already used by other
+programs; for the time being, just stop it.
+
+
+The instance home
+-----------------
+
+Let's look into your instance home, first read the README.txt.
+This instance home can be considered something like your workplace.
+
+::
+
+  $ ls * -F
+  README.txt
+
+  bin:
+  debugzope*        i18nmergeall*      importchecker*      runzope*        test.bat*
+  debugzope.bat*    i18nmergeall.bat*  importchecker.bat*  runzope.bat*    zopectl*
+  i18nextract*      i18nstats*         pyskel*             static-apidoc*  zopeservice.py*
+  i18nextract.bat*  i18nstats.bat*     pyskel.bat*         test*           zpasswd*
+
+  etc:
+  ftesting.zcml            package-includes/             securitypolicy.zcml  ssh_host_rsa_key
+  overrides_ftesting.zcml  principals.zcml               server.pem           zdaemon.conf
+  overrides.zcml           securitypolicy-ftesting.zcml  site.zcml            zope.conf
+
+  lib:
+  python/
+
+  log:
+  access.log  README.txt  z3.log
+
+  var:
+  Data.fs  Data.fs.index  Data.fs.lock  Data.fs.tmp  README.txt
+
+
+As you can see, the ``bin`` directory contains few scripts like
+``runzope``, ``test`` etc.  Some scripts are only specific to Windows.
+Zope saves all data in `var` directory.  Backup this directory
+regularly.  If ``Data.fs`` is missing, it will be automatically
+created when you run zope again. In `etc` you can see some
+configuration files.  In ``etc/zope.conf`` you can edit port numbers
+of various servers.  In ``lib/python`` you can place your Zope3
+packages.  By default this won't be in your Python path.  You can also
+place your packages in any standard Python path.
+
+
+The ZMI
+-------
+
+If you open a web browser and go to http://localhost:8080 you'll see
+the ZMI (Zope Management Interface).
+
+Go ahead and click the `Login` link at the upper right. Enter the user
+name and password you gave when creating the instance. Now click on
+[top] under `Navigation` on the right. Play around with adding some
+content objects (the Zope 3 name for instances that are visible in the
+ZMI). Note how content objects can be arranged in a hierarchy by
+adding "folders" which are special content objects that can hold other
+content objects.
+
+There is nothing special about the ZMI, it is just the default skin
+for Zope 3. You can modify it to your liking, or replace it entirely.
+
+When you're done exploring with the ZMI, go back to the window where
+you typed "runzope" and see that each request from your browser was
+displayed there as it happened. Press Control-C to stop Zope.
+
+
+Ticket Collector application
+----------------------------
+
+.. sidebar:: Extreme Programming
+
+  We will be using Extreme Programming style terminologies
+  through this tutorial.  I recommend you to use this  (or similar)
+  development process in your workplace.  Zope 3 has taken
+  lots of ideas from `Extreme Programming`_.
+
+To learn Zope 3 application development we will be using a
+issue/bug/ticket collector/tracker/manager application.
+
+First I will tell you the user stories, but we won't be
+doing the complete stories here.
+
+ 1. Individual small ticket collector for each project.
+    Many collectors can be added to one running zope.
+ 2. Any number of tickets can be added to one collector.
+ 3. Each ticket will be added with a description and
+    one initial comment.
+ 4. Additional comments can be added to tickets.
+
+.. _Extreme Programming: http://en.wikipedia.org/wiki/Extreme_programming
+
+
+Interfaces
+----------
+
+The first thing you have to do is to finalize the initial intraces of
+content objects, of course you can evolve it later.  This is something
+similar to table design, if you are using RDBMS, but not exactly the
+same, you will understand why it's not.
+
+As I said earlier you can place your packages in ``lib/python``
+directory.  So create ``lib/python/collector``, and don't forget
+to add ``__init__.py`` (empty file) to make it a Python package.
+
+To write our interfaces, create `interfaces.py` file.
+This is our `interfaces.py` ::
+
+  from zope.interface import Interface
+  from zope.schema import Text, TextLine, Field
+
+  from zope.app.container.constraints import ContainerTypesConstraint
+  from zope.app.container.constraints import ItemTypePrecondition
+  from zope.app.container.interfaces import IContained, IContainer
+
+  class IComment(Interface):
+      """Comment for Ticket"""
+
+      body = Text(
+          title=u"Additional Comment",
+          description=u"Body of the Comment.",
+          default=u"",
+          required=True)
+
+  class ITicket(IContainer):
+      """A ticket object."""
+
+      summary = TextLine(
+          title=u"Summary",
+          description=u"Short summary",
+          default=u"",
+          required=True)
+    
+      description = Text(
+          title=u"Description",
+          description=u"Full description",
+          default=u"",
+          required=False)
+
+      def __setitem__(name, object):
+          """Add an IComment object."""
+
+      __setitem__.precondition = ItemTypePrecondition(IComment)
+
+
+  class ICollector(IContainer):
+      """Collector the base object. It can only
+      contain ITicket objects."""
+
+      def __setitem__(name, object):
+          """Add an ICollector object."""
+
+      __setitem__.precondition = ItemTypePrecondition(ITicket)
+
+      description = Text(
+          title=u"Description",
+          description=u"A description of the collector.",
+          default=u"",
+          required=False)
+
+
+  class ITicketContained(IContained):
+      """Interface that specifies the type of objects that can contain
+      tickets.  So a ticket can only contain in a collector."""
+
+      __parent__ = Field(
+          constraint = ContainerTypesConstraint(ICollector))
+
+
+  class ICommentContained(IContained):
+      """Interface that specifies the type of objects that can contain
+      comments.  So a comment can only contain in a ticket."""
+
+      __parent__ = Field(
+          constraint = ContainerTypesConstraint(ITicket))
+
+As you can see the first three are our main interfaces, and the rest two
+are actaully constraint interfaces.
+
+
+Unit testing
+------------
+
+For most of the unit/functional testing, we will be using doctests.
+But for testing containers we are make using some already written
+unit tests.  All unit tests will written in ``tests`` sub-directory.
+
+This is ``tests/test_collector.py``::
+
+  import unittest
+  from zope.testing.doctestunit import DocTestSuite
+
+  from zope.app.container.tests.test_icontainer import TestSampleContainer
+
+  from collector.ticketcollector import Collector
+
+
+  class Test(TestSampleContainer):
+
+      def makeTestObject(self):
+          return Collector()
+
+  def test_suite():
+      return unittest.TestSuite((
+          DocTestSuite('collector.ticketcollector'),
+          unittest.makeSuite(Test),
+          ))
+
+  if __name__ == '__main__':
+      unittest.main(defaultTest='test_suite')
+
+Create a ``tests/test_ticket.py`` file similarly.
+This is very similarly to the above file. ::
+
+  import unittest
+  from zope.testing.doctestunit import DocTestSuite
+
+  from zope.app.container.tests.test_icontainer import TestSampleContainer
+
+  from collector.ticket import Ticket
+
+
+  class Test(TestSampleContainer):
+
+      def makeTestObject(self):
+          return Ticket()
+
+  def test_suite():
+      return unittest.TestSuite((
+          DocTestSuite('collector.ticket'),
+          unittest.makeSuite(Test),
+          ))
+
+  if __name__ == '__main__':
+      unittest.main(defaultTest='test_suite')
+
+And now ``test/test_comment.py`` file::
+
+  import unittest
+  from zope.testing.doctestunit import DocTestSuite
+
+  def test_suite():
+      return unittest.TestSuite((
+          DocTestSuite('collector.comment'),
+          ))
+
+  if __name__ == '__main__':
+      unittest.main(defaultTest='test_suite')
+
+Comment is not a container, but to run our doctests which
+we are going to write should run automatically, so this hook.
+In fact we can write tests in stand alone text files.
+
+To run the unit test::
+
+  $ cd $HOME/myzope/etc
+  $ ../bin/test -vpu --dir collector
+
+Of cource now all tests should fail.
+
+
+Implementation
+--------------
+
+As you can see in the unit test module, collector is going to be
+implemented in ticketcollector.py::
+
+  from zope.interface import implements
+  from zope.app.container.btree import BTreeContainer
+
+  from interfaces import ICollector
+
+  class Collector(BTreeContainer):
+      """A simple implementation of a collector using B-Tree Containers.
+
+      Make sure that the ``Collector`` implements the ``ICollector``
+      interface::
+
+        >>> from zope.interface.verify import verifyClass
+        >>> verifyClass(ICollector, Collector)
+        True
+    
+      Here is an example of changing the description of the collector::
+
+        >>> collector = Collector()
+        >>> collector.description
+        u''
+        >>> collector.description = u'Ticket Collector Description'
+        >>> collector.description
+        u'Ticket Collector Description'
+      """
+
+      implements(ICollector)
+
+      description = u''
+
+Similarly ticket.py::
+
+  from zope.interface import implements
+  from zope.interface import classProvides
+  from zope.app.container.btree import BTreeContainer
+  from zope.app.container.contained import Contained
+
+  from interfaces import ITicket
+  from interfaces import ITicketContained
+
+  class Ticket(BTreeContainer, Contained):
+      """A simple implementation of a ticket using B-Tree Containers.
+
+      Make sure that the ``Ticket`` implements the ``ITicket`` interface::
+
+        >>> from zope.interface.verify import verifyClass
+        >>> verifyClass(ITicket, Ticket)
+        True
+
+      Here is an example of changing the summary and description of the ticket::
+
+        >>> ticket = Ticket()
+        >>> ticket.summary
+        u''
+        >>> ticket.description
+        u''
+        >>> ticket.summary = u'Ticket Summary'
+        >>> ticket.description = u'Ticket Description'
+        >>> ticket.summary
+        u'Ticket Summary'
+        >>> ticket.description
+        u'Ticket Description'
+      """
+
+      implements(ITicket, ITicketContained)
+
+      summary = u''
+      description = u''
+
+Similarly comment.py::
+
+  from zope.interface import implements
+
+  from interfaces import IComment
+  from interfaces import ICommentContained
+  from zope.app.container.contained import Contained
+
+  class Comment(Contained):
+      """A simple implementation of a comment.
+
+      Make sure that the ``Comment`` implements the ``IComment`` interface::
+
+        >>> from zope.interface.verify import verifyClass
+        >>> verifyClass(IComment, Comment)
+        True
+
+      Here is an example of changing the body of the comment::
+
+        >>> comment = Comment()
+        >>> comment.body
+        u''
+        >>> comment.body = u'Comment Body'
+        >>> comment.body
+        u'Comment Body'
+      """
+
+      implements(IComment, ICommentContained)
+
+      body = u""
+
+
+Configuration
+-------------
+
+We have written intefaces and its implemenations, now how to bind this
+with Zope 3 framework.  We will use Zope Configuration Markup Language
+(ZCML) based configuaration file for this.
+
+This is our configure.zcml::
+
+  <configure
+      xmlns="http://namespaces.zope.org/zope">
+
+    <interface 
+        interface=".interfaces.ICollector" 
+        type="zope.app.content.interfaces.IContentType"
+        /> 
+
+    <content class=".ticketcollector.Collector">
+      <implements
+          interface="zope.app.annotation.interfaces.IAttributeAnnotatable"
+          />
+      <implements
+          interface="zope.app.container.interfaces.IContentContainer" 
+          />
+      <require
+          permission="zope.ManageContent"
+          set_schema=".interfaces.ICollector"
+          />
+      <require
+          permission="zope.ManageContent"
+          interface=".interfaces.ICollector"
+          />
+    </content>
+
+    <interface 
+        interface=".interfaces.ITicket" 
+        type="zope.app.content.interfaces.IContentType"
+        /> 
+
+    <content class=".ticket.Ticket">
+      <implements
+          interface="zope.app.annotation.interfaces.IAttributeAnnotatable"
+          />
+      <implements
+          interface="zope.app.container.interfaces.IContentContainer" 
+          />
+      <require
+          permission="zope.ManageContent"
+          set_schema=".interfaces.ITicket"
+          />
+      <require
+          permission="zope.ManageContent"
+          interface=".interfaces.ITicket"
+          />
+    </content>
+
+    <interface 
+        interface=".interfaces.IComment" 
+        type="zope.app.content.interfaces.IContentType"
+        /> 
+
+    <content class=".comment.Comment">
+      <implements
+          interface="zope.app.annotation.interfaces.IAttributeAnnotatable"
+          />
+      <require
+          permission="zope.ManageContent"
+          set_schema=".interfaces.IComment"
+          />
+      <require
+          permission="zope.ManageContent"
+          interface=".interfaces.IComment"
+          />
+    </content>
+
+    <include package=".browser" />
+
+  </configure>
+
+
+Running application
+-------------------
+
+Before running the applcation we will add one some view for adding
+Collector.  We will go in to more details in the next part.
+
+Create a `browser` directory and under that, a new `configure.zcml`
+file::
+
+  <configure
+      xmlns="http://namespaces.zope.org/browser">
+
+    <addMenuItem
+        class="collector.ticketcollector.Collector"
+        title="Collector"
+        description="A Collector"
+        permission="zope.ManageContent"
+        />
+
+  </configure>
+
+The "class" attribute specifies the module path for the class, a
+leading dot means to make the import relative to the package
+containing the ZCML file. Therefore in this case Zope will import the
+collector.ticketcollector module, then import "Collector" from that module. 
+
+The "title" attribute provides the title to display in the add menu. 
+
+The "permission" attribute is used to describe what permission is
+required for a person to be able to add one of these objects. The
+"zope.ManageContent" permission means that the user can add, remove,
+and modify content (the "admin" user you created while making the
+instance is one such user). 
+
+We need to tell Zope to read our ZCML file, and the easiest way to do
+that is to put a "slug" in the $HOME/myzope/etc/package-includes/
+directory. A "slug" is a ZCML file that just includes another
+file. Here's what our slug should look like (save it as
+"collector-configure.zcml")::
+
+  <include package="collector" />
+
+Now if we start Zope back up, we can go to the ZMI and add our content
+type by clicking on "Add Collector" and entering a name for our
+object; name it "MyCollector".
+
+Now restart Zope and visit http://localhost:8080
+You can add collector from menu.
+
+.. Note::
+
+  Part of this tutorial is taken from Benji York's Zope 3 Quick
+  Start Guide, http://www.benjiyork.com/quick_start/
+  "Benji York (http://benjiyork.com)"

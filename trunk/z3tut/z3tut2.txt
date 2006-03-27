@@ -1,0 +1,205 @@
+========================
+Zope 3 Tutorial (Part 2)
+========================
+
+
+Introduction
+------------
+
+Zope 3 has a concept of View Components, which could be any sort of
+view on an object - HTML, FTP, XMLRPC, or even native widgets for an
+operating system.  Views and controllers specific to an HTML interface
+are typically thought of as "browser" views.  There's a browser ZCML
+namespace, where most web views are configured, and it seems to be a
+common practice to group code for web browsers in a python package or
+module called browser to connote the type of view that it is.  XMLRPC
+views are typically bundled in a module or package called xmlrpc,
+etc.  There is no enforcement of these names.
+
+So what we're interested in now is making a custom look for a web
+browser.  Zope 3's browser UI system uses a concept of skins, which are
+made up of layers. Browser views are assigned to layers. When a view
+needs to be looked up, the Zope 3 framework goes through the layers
+defined for the current skin and looks up the requested view until it
+finds it. This is similar, I suppose, to how a CSS class is looked
+up. The HTML code may say to use class 'highlight', and the style
+sheets are gone through in order until 'highlight' is
+found. Replacement style sheets may be used (such as print or
+presentation) that display the 'highlight' class differently.
+
+To make the collector's skin, I made a new directory in the collector
+package named browser, and made it into a Python package by adding an
+empty __init__.py. I then made a sub-package of browser called skin,
+and added an empty __init__.py there as well.
+
+
+Template
+--------
+
+Once there, I made a new file called view_macros.pt. Using the
+'Developing New Skins' chapter_ of the Zope 3 Developers Book for
+guidance, I created the following template (Note that this is done
+using Zope Page Templates)::
+
+  <html metal:define-macro="page" i18n:domain="collector">
+
+  <head metal:define-macro="head">
+    <title>Collector</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="context/++resource++tuto.css" rel="stylesheet" type="text/css"
+          tal:attributes="href context/++resource++tuto.css" />
+  </head>
+
+  <body metal:define-macro="body">
+  <div id="uberclass">
+    <div id="sidebar">
+      <ul id="navigation">
+      <div metal:define-slot="sidebox">
+        <li metal:define-slot="homelink">
+          <a href="../@@CollectorMain.html" i18n:translate="">Home</a>
+        </li>
+        <li class="last" metal:define-slot="addticketlink">
+          <a href="/@@+/AddTicket.html" i18n:translate="">Add Ticket</a>
+        </li>
+      </div>
+      </ul>
+    </div>
+    <div id="container">
+      <div metal:define-slot="mainbox">
+        <h1 i18n:translate="">Collector</h1>
+        <h2 i18n:translate="">Ticket Collector Software</h2>
+        <p i18n:translate="">Use the left navigation bar
+          for accessing the functionalities of Collector.</p>
+      </div>
+    </div>
+  </div>
+  </body>
+  </html>
+
+
+.. _chapter: http://dev.zope.org/Zope3/Zope3Book/skin.html
+
+
+CSS
+---
+
+I followed that with a CSS file called todo.css, with the following
+content::
+
+  a:link {color:blue}
+  a:visited {color:blue}
+  a:active {color:blue}
+  a:hover {color:blue}
+
+  div#header h1,
+  div#container h1 {
+      font-size: 35px;
+  }
+
+  div#header h2,
+  div#container h2,
+  div#sidebar ul li.head {
+      font-size: 14px;
+  }
+
+  div#sidebar ul li a, div#container p {
+      font-size: 12px;
+  }
+
+  /* See the tar ball for full CSS file. */
+
+Now for the important part - wiring these two files into Zope so
+that we can use them in the collector application. To do this, we need
+to define a couple of things:
+
+  1. A new layer - the template and CSS defined above will be attached
+     to this new browser UI layer, as well as the custom views to add
+     and complete 'todo' items in the list.
+
+  2. A new skin - Remember, a skin is composed of layers. The new
+     layer we define above will be added on top of other layers in the
+     system so that other views and resources can be picked up if needed.
+
+  3. Resources and Pages - The CSS file, since it's not dynamic, can
+     be defined as a resource, while the template can be defined as a
+     page (basically a complete HTML view).
+
+
+Configuration
+-------------
+
+With that list in mind, we add a file in collector/browser/skin called
+configure.zcml with the following contents::
+
+  <configure
+      xmlns="http://namespaces.zope.org/browser">
+
+    <layer name="tuto"/>
+
+    <skin name="tuto" layers="tuto rotterdam default"/>
+
+    <resource name="tuto.css" file="tuto.css" layer="tuto"/>
+
+    <page
+        for="*"
+        name="tuto_macros"
+        permission="zope.View"
+        layer="tuto"
+        template="view_macros.pt"
+        />
+
+  </configure>
+
+As you can see, it pretty much maps to the list of items above. A
+layer is made, named todo, and a skin of the same name is made with
+the layers todo, rotterdam, and default. When the todo skin is used,
+views will be looked up in that order, starting from the beginning of
+the chain. After that, we define the CSS file as a resource to be used
+in the todo layer. And then we define a page for the template, also in
+the todo layer. Note that there's a for="*" in the page
+declaration. That means the page is a browser view that can be used
+for any object in the system. We want this because this page defines
+the basic ZPT METAL macros that all other pages/templates will use.
+
+Run and see the skin
+--------------------
+
+Change the browser/configure.zcml like this::
+
+  <configure
+      xmlns="http://namespaces.zope.org/browser">
+
+      <page
+          name="CollectorMain.html"
+          for="collector.interfaces.ICollector"
+          class=".collectormain.CollectorMain"
+          template="collectormain.pt"
+          permission="zope.Public"
+          menu="zmi_views"
+          title="Preview"
+          />
+
+      <defaultView
+          for="collector.interfaces.ICollector"
+          name="CollectorMain.html"
+          />
+
+      <addMenuItem
+          class="collector.ticketcollector.Collector"
+          title="Collector"
+          description="A Collector"
+          permission="zope.ManageContent"
+          />
+
+    <include package=".skin" />
+
+  </configure>
+
+Now visit, http://localhost:8080/++skin++tuto/ try adding collector
+objects and click on the button, see how it looks like!
+
+.. Note::
+
+  Part of this tutorial is taken from Jeffrey Shell's Simple Todo
+  Application, which is maintained by Philipp von Weitershausen
+  http://worldcookery.com/files/jeffshell-todo/
