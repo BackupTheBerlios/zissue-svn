@@ -69,6 +69,14 @@
       name="AddComment.html"
       />
 
+  <page
+      name="searchform.html" 
+      for="collector.interfaces.ICollector"
+      class=".searchform.CollectorSearch"
+      template="searchform.pt"
+      permission="zope.Public"
+      />
+
   <include package=".skin" />
 
 </configure>

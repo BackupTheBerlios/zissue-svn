@@ -8,13 +8,6 @@
 
 <div metal:fill-slot="mainbox">
   <h1 i18n:translate="">Collector</h1>
-  <ol>
-  <span tal:repeat="item view/tickets">
-    <li><a tal:attributes="href item/name" tal:content="string: ${item/summary}">Summary</a></li>
-  </span>
-  </ol>
-
-<h4>Search</h4>
 
 <p>
 <form action="searchform.html" method="get">
@@ -23,6 +16,23 @@
       <input type="submit" value="Search" />
 </form>
 </p>
+
+<h3>Search Results</h3>
+ <div tal:condition="request/searchText|nothing" tal:omit-tag="">
+   <div tal:define="result view/searchSimpleText" tal:omit-tag="">
+     <div tal:condition="not:result/total">
+       No result found.
+     </div>
+
+   <div tal:condition="result/total">
+     <div tal:repeat="item result/results">
+       <a href="location"
+         tal:attributes="href item/url"
+           tal:content="item/name">out put</a>
+     </div>
+   </div>
+  </div>
+</div>
 
 </div>
 </body>
