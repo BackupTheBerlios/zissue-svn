@@ -1,0 +1,30 @@
+<html metal:use-macro="context/@@tuto_macros/page">
+
+<body metal:use-macro="body">
+<div metal:fill-slot="sidebox">
+  <li><a href="../@@CollectorMain.html" i18n:translate="">Home</a></li>
+  <li><a href="#" i18n:translate="">Add Ticket</a></li>
+</div>
+
+<div metal:fill-slot="mainbox">
+  <h1 i18n:translate="">Collector</h1>
+
+  <form action="." tal:attributes="action request/URL">
+
+    <div tal:repeat="widget view/widgets">
+      <b tal:content="widget/label" i18n:translate="">label</b>
+      <div tal:content="structure widget"></div>
+    </div>
+
+    <input
+        tal:repeat="action view/actions"
+        tal:replace="structure action/render"
+    />
+
+  </form>
+
+</div>
+</body>
+
+</html>
+

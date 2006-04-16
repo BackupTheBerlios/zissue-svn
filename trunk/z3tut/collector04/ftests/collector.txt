@@ -1,0 +1,108 @@
+
+Collector Initialization
+------------------------
+
+Initialize the browser and set authorization::
+
+  >>> from zope.testbrowser import Browser
+  >>> browser = Browser()
+  >>> browser.addHeader("Authorization", "Basic mgr:mgrpw")
+
+Open collector adding form and check url::
+
+  >>> browser.open("http://localhost/+/AddCollector.html=mc")
+  >>> browser.url
+  'http://localhost/+/AddCollector.html=mc'
+  >>> description = browser.getControl(name="form.description")
+  >>> description.value = "MyCollector"
+
+Let's verify the value::
+
+  >>> description.value
+  'MyCollector'
+
+Submit the form and test url::
+
+  >>> browser.getControl(name="form.actions.add").click()
+  >>> browser.url
+  'http://localhost/@@contents.html'
+
+Go to new collector home::
+
+  >>> mclink = browser.getLink('mc')
+  >>> mclink.click()
+  >>> browser.url
+  'http://localhost/mc/@@CollectorMain.html'
+
+
+Ticket Adding
+-------------
+
+Visit ticket page::
+
+  >>> ticketlink = browser.getLink("Add Ticket")
+  >>> ticketlink.click()
+  >>> browser.url
+  'http://localhost/mc/@@+/AddTicket.html'
+
+Let's try to add a new ticket::
+
+  >>> ticketsummary = browser.getControl(name="form.summary")
+  >>> ticketsummary.value = "FirstTicket"
+  >>> ticketdescription = browser.getControl(name="form.description")
+  >>> ticketdescription.value = "First Ticket"
+
+Submit the form and test url::
+
+  >>> browser.getControl(name="form.actions.add").click()
+  >>> browser.url
+  'http://localhost/mc/@@CollectorMain.html'
+
+Verify the ticket just added is there::
+
+  >>> browser.contents
+  '...FirstTicket...'
+
+Adding a New Comment
+--------------------
+
+Let's click on the first ticket::
+
+  >>> homelink = browser.getLink("FirstTicket")
+  >>> homelink.click()
+  >>> browser.url
+  'http://localhost/mc/Ticket/@@+/AddComment.html'
+
+Verify the initial comment is there::
+
+  >>> browser.contents
+  '...FirstTicket...'
+  >>> browser.contents
+  '...First Ticket...'
+
+Try to add one additional comment::
+
+  >>> commentbody = browser.getControl(name="form.body")
+  >>> commentbody.value = "Comment One"
+
+Submit the form and test url::
+
+  >>> browser.getControl(name="form.actions.add").click()
+  >>> browser.url
+  'http://localhost/mc/@@CollectorMain.html'
+
+Let's click on the first ticket again::
+
+  >>> homelink = browser.getLink("FirstTicket")
+  >>> homelink.click()
+  >>> browser.url
+  'http://localhost/mc/Ticket/@@+/AddComment.html'
+
+Verify the initial comment is there::
+
+  >>> browser.contents
+  '...FirstTicket...'
+  >>> browser.contents
+  '...First Ticket...'
+  >>> browser.contents
+  '...Comment One...'
