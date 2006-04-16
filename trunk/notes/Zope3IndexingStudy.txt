@@ -1,0 +1,77 @@
+I just started learning Indexing/Cataloging techniques in Zope 3.
+
+Here I wish to summarise my study.
+
+Requirements
+------------
+
+Search a string (whole/part/regex) in a field of partilcular type of document 
+in a particlur container.
+
+  - If the size of whole content is small and never going to grow or there won't be heavy
+    requests we can go for a simple lookup using a looping function (may be recursive)
+
+  - If the size of whole content is medium and never going to grow or there won't be heavy
+    requests we can go for a simple catalog (which one? hurry)
+    This will be the most common case.
+
+  - If the size of whole content is huge and there will be heavy
+    requests we can go for a TextIndexNG3 or external indexing (Lucene,Pylucene)?
+
+
+Things to look for:
+
+hurry
+-----
+
+ 1. http://faassen.n--tree.net/blog/view/weblog/2005/09/09/0
+
+ 2. http://mail.zope.org/pipermail/zope3-users/2006-January/001874.html
+
+ 3. http://codespeak.net/svn/z3/hurry/trunk/src/hurry/query/query.txt
+
+http://mail.zope.org/pipermail/zope3-users/2005-September/001073.html
+
+http://mail.zope.org/pipermail/zope3-users/2005-September/001078.html
+
+http://mail.zope.org/pipermail/zope3-users/2005-October/001336.html
+
+http://mail.zope.org/pipermail/zope3-users/2006-March/002655.html
+
+There is something wrong with IntIds (unique)
+http://www.zope.org/Collectors/Zope3-dev/466
+
+What does this mean?
+
+http://mail.zope.org/pipermail/zope3-users/2005-August/000842.html
+
+    + Site Managers are global and local now; adapters and utilties are
+      directly registered with the site manager. Now global and local
+      component registration and lookup behaves very similar.
+
+http://mail.zope.org/pipermail/zope3-users/2005-October/001124.html
+
+can I use global utility for indexing a single folder objects?
+
+What about TextIndexNG3
+
+Lucene and PyLucene?
+
+http://svn.zope.org/zc.catalog/
+
+To check out: $ svn co svn://svn.zope.org/repos/main/zc.catalog
+
+svn co http://codespeak.net/svn/z3/hurry/trunk hurry
+
+
+A simple usage of catalog
+-------------------------
+
+::
+
+  from zope.app.catalog.interfaces import ICatalog
+  from zope.app import zapi
+  cat1 = zapi.getUtility(ICatalog, 'cat1') #`cat1` is the name of catalog
+  result = cat1.searchResults(TextIndex='one') #search `one`
+  gen = iter(result)
+  print gen.next()
