@@ -2,14 +2,17 @@
 
 """screencastwriter - Screencast Writer
 
+Copyright 2006 Baiju M <baiju.m.mail@gmail.com>
+
 This program is released under GNU GPL version 2,
 or (at your option) any later version
 
-$Id$
+$Id: scw.py 58 2006-03-26 17:44:25Z baijum81 $
 """
 
 SCREAN_CAST_FILE = 'testcast.txt'
 
+import os
 import signal
 import gtk
 import gtk.glade
@@ -22,7 +25,8 @@ class ScreencastWriter(object):
         self.initialiseWindow()
 
     def initialiseWindow(self):
-        xml = gtk.glade.XML("scw.glade")
+        xml = gtk.glade.XML(
+            os.path.join(os.path.dirname(__file__), "scw.glade"))
         self.mainwin = xml.get_widget("mainwin")
         self.notebook = xml.get_widget("notebook")
         self.label = xml.get_widget("label")
