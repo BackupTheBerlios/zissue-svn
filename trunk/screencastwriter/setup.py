@@ -34,11 +34,10 @@ setup(
     packages = ["screencastwriter"],
     classifiers = [
     "Programming Language :: Python",
-    "License :: OSI Approved :: GPL License",
+    "License :: OSI Approved :: GNU General Public License (GPL)",
     "Natural Language :: English",
     "Development Status :: 3 - Alpha",
     "Operating System :: POSIX",
-    "Operating System :: GNU/Linux",
     "Environment :: X11 Applications",
     "Intended Audience :: Developers",
     "Topic :: Desktop Environment",
