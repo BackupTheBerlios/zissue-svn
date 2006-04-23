@@ -10,3 +10,14 @@ or (at your option) any later version
 
 --
 Baiju M
+
+
+----------------
+
+Usage
+=====
+
+copy your `dialog-text` file to `/tmp/scwfile.txt`
+then run ``scw``.
+
+Refer `testcast.txt` for a sample `dialog-text` file.
