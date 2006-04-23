@@ -27,6 +27,7 @@ setup(
     zip_safe=False,
     data_files=[
     ('screencastwriter', ['src/screencastwriter/scw.glade']),
+    ('screencastwriter', ['README.txt']),
     ('screencastwriter', ['src/screencastwriter/testcast.txt']),
     ],
     scripts = ['src/scw'],
