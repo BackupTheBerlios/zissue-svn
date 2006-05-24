@@ -1,0 +1,128 @@
+.. This is attempt to document "What's New in Zope 3.3" motivated by AMK's
+.. What's New in Python articles (http://docs.python.org/whatsnew/whatsnew24.html)
+
+
+What's New in Zope 3.3
+======================
+
+:Date: Saturday, May 20 2006
+:Author: Baiju M <baiju.m.mail AT gmail.com>
+
+
+.. contents::
+.. sectnum::
+
+
+Simplify Skinning
+-----------------
+
+Propsal: SimplifySkinning_
+
+.. _SimplifySkinning: http://dev.zope.org/Zope3/SimplifySkinning
+
+Skins are technically interfaces defined using ``zope.interafce``, and so the
+implementation will be using a Python class.  Eventhough it is interface, the
+naming convention, that is prefix name with 'I' is not followed by standard
+skins (due to historical reasons?) like 'Rotterdam', 'Default' etc.  To create
+a custom skin it is always better to inherit from standard skin interface.  It
+is by convention that skins will be created in sub-package named ``skin`` in
+your ``browser`` package of your main package.  For example if your package
+name is `foo`, then `foo.browser.skin` will be the skin package, but this is
+not mandatory.  Your skin interfaces can be defined in
+`foo.browser.skin.interfaces`.  Here is an example `interfaces.py`::
+
+  from zope.app.rotterdam import Rotterdam
+
+  class ShanghaiSkin(Rotterdam):
+    """Wo zhu zai Shanghai"""
+
+To register this we will use ``interface`` and ``utility`` directives in
+``zope`` namespace.  The type of the `ShanghaiSkin` skin is
+``zope.publisher.interfaces.browser.IBrowserSkinType``.  Here is a sample
+`configure.zcml`::
+
+  <interface
+      interface=".interfaces.ShanghaiSkin"
+      type="zope.publisher.interfaces.browser.IBrowserSkinType"
+      />
+
+  <utility
+      component=".interfaces.ShanghaiSkin"
+      provides="zope.publisher.interfaces.browser.IBrowserSkinType"
+      name="ShanghaiSkin"
+      />
+
+As a shortcut, we can also just use the interface directive and pass the new
+name parameter. The following one directive has the same effect as the two
+above regarding the skin registration::
+
+  <interface
+      interface=".interfaces.ShanghaiSkin"
+      type="zope.publisher.interfaces.browser.IBrowserSkinType"
+      name="ShanghaiSkin"
+      />
+
+Registering views and resources is not any different now, but you can simply
+register them on the skin directly::
+
+  <browser:resource
+      name="zope3logo.gif" 
+      file="shanghailogo.gif" 
+      layer=".interfaces.ShanghaiSkin"
+      />
+
+As you can see, we don't have to create an extra layer just to create a custom
+skin. We were also able to use standard Component Architecture ZCML directives
+instead of custom ones whose special syntax the developer needs to remember
+additionally.
+
+A typical ``browser:page`` with with ``layer`` specified is like this::
+
+  <browser:page
+      for="*"
+      name="dialog_macros"
+      permission="zope.View"
+      layer=".interfaces.ShanghaiSkin"
+      template="dialog_macros.pt"
+      />
+
+.. What is the status?
+.. Enhance tracebacks in persistent logs
+.. -------------------------------------
+
+.. Propsal: EnhanceTracebacksInPersistentLogs_
+
+.. .. _EnhanceTracebacksInPersistentLogs: http://dev.zope.org/Zope3/EnhanceTracebacksInPersistentLogs
+
+Local component management simplification
+-----------------------------------------
+
+Propsal: LocalComponentManagementSimplification_
+
+.. _LocalComponentManagementSimplification: http://dev.zope.org/Zope3/LocalComponentManagementSimplification
+
+Reducing the amount of ZCML directives
+--------------------------------------
+
+Propsal: ReducingTheAmountOfZCMLDirectives_
+
+.. _ReducingTheAmountOfZCMLDirectives: http://dev.zope.org/Zope3/ReducingTheAmountOfZCMLDirectives
+
+Make Zope app smaller
+---------------------
+
+Propsal: MakeZopeAppSmaller_
+
+.. _MakeZopeAppSmaller: http://dev.zope.org/Zope3/MakeZopeAppSmaller
+
+Other Changes
+-------------
+
+New, Improved, and Deprecated Modules
+-------------------------------------
+
+Porting to Zope 3.3
+-------------------
+
+Acknowledgements
+----------------
